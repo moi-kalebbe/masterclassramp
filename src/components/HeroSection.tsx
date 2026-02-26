@@ -1,15 +1,19 @@
+import { Users, CalendarDays, Radio } from "lucide-react";
 import CtaButton from "./CtaButton";
+
+const badges = [
+  { icon: Users, label: "200+ empresários" },
+  { icon: CalendarDays, label: "03 de Março" },
+  { icon: Radio, label: "Ao vivo" },
+];
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-    {/* Background image */}
     <div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
     />
-    {/* Dark overlay */}
     <div className="absolute inset-0 bg-background/85" />
-    {/* Gradient bottom fade */}
     <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
     <div className="relative z-10 container max-w-4xl text-center px-6 py-24">
@@ -26,6 +30,20 @@ const HeroSection = () => (
           negócio e agora precisam profissionalizar a gestão e o lucro para
           sustentar a próxima escala.
         </p>
+
+        {/* Stats badges */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-10">
+          {badges.map((b) => (
+            <div
+              key={b.label}
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm text-muted-foreground"
+            >
+              <b.icon className="w-4 h-4 text-primary" />
+              <span>{b.label}</span>
+            </div>
+          ))}
+        </div>
+
         <CtaButton />
       </div>
     </div>
