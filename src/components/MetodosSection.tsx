@@ -51,7 +51,7 @@ const MetodosSection = () => (
               <span className="text-primary text-sm font-semibold">
                 {m.name}
               </span>
-              <p className="text-muted-foreground text-sm sm:text-base mt-3 leading-relaxed">
+              <p className="text-foreground text-sm sm:text-base mt-3 leading-relaxed">
                 {m.text}
               </p>
             </div>
