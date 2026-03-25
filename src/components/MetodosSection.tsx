@@ -23,7 +23,7 @@ const MetodosSection = () => (
   <section className="py-16 sm:py-24 px-6">
     <div className="container max-w-4xl">
       <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-12">
-        Os Métodos
+        Mentores
       </h2>
       <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
         {mentors.map((m) => (
