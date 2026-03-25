@@ -2,7 +2,6 @@ import { Users, CalendarDays, Radio } from "lucide-react";
 import CtaButton from "./CtaButton";
 
 const badges = [
-  { icon: Users, label: "200+ empresários" },
   { icon: CalendarDays, label: "09 de Abril" },
   { icon: Radio, label: "Ao vivo" },
 ];
