@@ -1,5 +1,5 @@
-import rebecaImg from "@/assets/rebeca_maia.png";
-import lucasImg from "@/assets/lucas.png";
+import rebecaImg from "@/assets/rebeca_maia.jpg";
+import lucasImg from "@/assets/lucas.jpg";
 
 const bios = [
   {
