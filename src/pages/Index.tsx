@@ -5,7 +5,6 @@ import MetodosSection from "@/components/MetodosSection";
 import DominarSection from "@/components/DominarSection";
 import FechamentoSection from "@/components/FechamentoSection";
 import ProvaSocialSection from "@/components/ProvaSocialSection";
-import BiosSection from "@/components/BiosSection";
 
 const Index = () => (
   <main className="bg-background min-h-screen">
@@ -16,7 +15,6 @@ const Index = () => (
     <DominarSection />
     <FechamentoSection />
     <ProvaSocialSection />
-    <BiosSection />
   </main>
 );
 

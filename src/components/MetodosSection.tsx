@@ -6,16 +6,18 @@ const mentors = [
   {
     img: rebecaImg,
     title: "Arquitetura de Gestão",
-    name: "Com Rebeca Maia",
-    badge: "10+ anos de experiência",
+    name: "Rebeca Maia",
+    role: "Mentora de Gestão",
     text: "Como desenhar processos e formar uma equipe que pensa e decide por você, eliminando a fadiga de decisão e devolvendo o seu tempo estratégico.",
+    bio: "Mentora com 10+ anos de experiência em destravar operações familiares e transformar empresas dependentes do dono em organizações autônomas.",
   },
   {
     img: lucasImg,
     title: "Inteligência Financeira",
-    name: "Com Lucas Nigro",
-    badge: "Especialista em Finanças",
+    name: "Lucas Nigro",
+    role: "Especialista Financeiro",
     text: "Como dominar seus indicadores para encontrar o lucro que está fugindo do seu controle e garantir que cada movimento de escala seja financeiramente viável.",
+    bio: "Especialista em gestão financeira de alta complexidade, ajudando empresários a encontrar lucro real e escalar com segurança.",
   },
 ];
 
@@ -39,14 +41,20 @@ const MetodosSection = () => (
               />
             </div>
             <div className="p-6 sm:p-8">
-              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1">
-                {m.title}
-              </h3>
-              <span className="text-primary text-sm font-semibold">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-0.5 tracking-tight">
                 {m.name}
+              </h3>
+              <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+                {m.role}
               </span>
-              <p className="text-foreground text-sm sm:text-base mt-3 leading-relaxed">
+              <h4 className="text-lg font-bold text-foreground mt-4 mb-1">
+                {m.title}
+              </h4>
+              <p className="text-foreground text-sm sm:text-base leading-relaxed">
                 {m.text}
+              </p>
+              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mt-3 border-t border-border pt-3">
+                {m.bio}
               </p>
             </div>
           </div>
