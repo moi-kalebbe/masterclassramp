@@ -1,5 +1,5 @@
-import rebecaImg from "@/assets/rebeca_maia.jpg";
-import lucasImg from "@/assets/lucas.jpg";
+import rebecaImg from "@/assets/rebeca_maia.webp";
+import lucasImg from "@/assets/lucas.webp";
 import { Award } from "lucide-react";
 
 const mentors = [
@@ -37,6 +37,8 @@ const MetodosSection = () => (
               <img
                 src={m.img}
                 alt={m.name}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
               />
             </div>
