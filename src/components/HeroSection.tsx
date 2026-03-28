@@ -10,7 +10,7 @@ const HeroSection = () => (
   <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
     <div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+      style={{ backgroundImage: "url('/images/hero-bg.webp')" }}
     />
     <div className="absolute inset-0 bg-background/85" />
     <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />

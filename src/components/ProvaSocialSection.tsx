@@ -1,5 +1,5 @@
-import event1 from "@/assets/event-1.jpg";
-import event2 from "@/assets/event-2.jpg";
+import event1 from "@/assets/event-1.webp";
+import event2 from "@/assets/event-2.webp";
 import { Camera, Users } from "lucide-react";
 
 const ProvaSocialSection = () => (
@@ -26,6 +26,8 @@ const ProvaSocialSection = () => (
             <img
               src={img.src}
               alt={img.alt}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />

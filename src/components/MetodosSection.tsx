@@ -1,5 +1,5 @@
-import rebecaImg from "@/assets/rebeca_maia.jpg";
-import lucasImg from "@/assets/lucas.jpg";
+import rebecaImg from "@/assets/rebeca_maia.webp";
+import lucasImg from "@/assets/lucas.webp";
 import { Award } from "lucide-react";
 
 const mentors = [
