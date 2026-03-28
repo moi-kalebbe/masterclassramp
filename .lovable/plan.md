@@ -1,40 +1,62 @@
 
 
-## Plan: Elevar o design da Landing Page
+## Análise de Performance da Landing Page
 
-### Problemas identificados
-- Layout muito centrado e monótono
-- Falta de ícones decorativos nas seções
-- Fotos dos experts cortadas/pequenas nos cards de Métodos
-- Seções Provocação e Ponto Cego são blocos de texto puro
-- Prova Social sem contexto/texto
-- Bios no rodapé muito discretas
+### Resultados Medidos
 
-### Mudanças por componente
+| Métrica | Valor Atual | Meta Ideal |
+|---------|-------------|------------|
+| First Paint | 4.3s | < 1s |
+| First Contentful Paint | 4.5s | < 1.8s |
+| DOM Content Loaded | 4.3s | < 2s |
+| Full Page Load | 5.8s | < 3s |
+| Transfer Size Total | ~2MB | < 800KB |
 
-**1. HeroSection** — Adicionar badges com ícones (Users, Calendar, Trophy) acima do CTA mostrando stats como "200+ empresários", "03 de Março", "Ao vivo". Adicionar sutil animated gradient border.
+### Problemas Identificados
 
-**2. ProvocacaoSection** — Layout split: texto à esquerda, ícones ilustrativos à direita (AlertTriangle, Lock, Battery). Cada parágrafo com um ícone lateral. Remover centralização, usar alinhamento à esquerda com grid.
+1. **Imagens pesadas sem otimização** — 4 imagens somam ~1MB (hero-bg 379KB, event-1 323KB, event-2 298KB, rebeca 264KB). Nenhuma usa lazy loading ou formato moderno.
 
-**3. PontoCegoSection** — Adicionar ícones (EyeOff, TrendingDown) no card. Usar layout com ícone grande decorativo de fundo (semi-transparente). Adicionar stats visuais fictícios tipo "80% dos empresários..." em destaque.
+2. **Google Fonts bloqueante** — `@import url(...)` no CSS bloqueia a renderização até a fonte carregar. Isso sozinho atrasa o First Paint em ~1-2s.
 
-**4. MetodosSection** — Fotos dos experts maiores, aspect ratio retrato (3:4 ao invés de 4:3) para não cortar. Imagem mais alta mostrando o corpo. Adicionar badges de credenciais. Hover effect mais pronunciado.
+3. **Lucide-react inteiro importado** — 158KB de ícones sendo carregados, quando apenas ~8 ícones são usados.
 
-**5. DominarSection** — Ícones maiores, com fundo gradiente. Cards individuais ao invés de lista simples. Grid de 3 colunas no desktop. Números/contadores visuais (01, 02, 03).
+4. **Imagens above-the-fold e below-the-fold tratadas igual** — Imagens de Prova Social e Mentores carregam junto com o Hero, competindo por banda.
 
-**6. ProvaSocialSection** — Adicionar título mais forte, texto descritivo, overlay gradient nas fotos com texto sobre elas. Badges de "Evento Presencial" etc.
+5. **Seções abaixo da dobra renderizam imediatamente** — Sem lazy loading de componentes.
 
-**7. FechamentoSection** — Adicionar countdown visual ou data em destaque. Ícones maiores para os perks. Background pattern sutil.
+### Plano de Melhorias
 
-**8. BiosSection** — Fotos maiores (w-24 h-24), com glow border verde. Adicionar títulos de cargo. Layout mais destacado com cards.
+**1. Otimizar carregamento de fonte (index.css + index.html)**
+- Remover `@import url(...)` do CSS
+- Adicionar `<link rel="preconnect">` e `<link rel="preload">` no `index.html` com `font-display: swap`
+- Carregar apenas weights usados (400, 500, 600, 700, 800, 900)
+
+**2. Lazy loading de imagens (MetodosSection, ProvaSocialSection)**
+- Adicionar `loading="lazy"` e `decoding="async"` nas imagens dos mentores e prova social
+- Adicionar `fetchpriority="high"` apenas na imagem do Hero
+
+**3. Otimizar importações do Lucide**
+- Trocar `import { Icon } from "lucide-react"` por `import Icon from "lucide-react/dist/esm/icons/icon-name"` em todos os componentes — isso elimina o bundle de 158KB
+
+**4. Preload da imagem Hero (index.html)**
+- Adicionar `<link rel="preload" as="image" href="/images/hero-bg.jpg">` para iniciar o download antes do CSS
+
+**5. Comprimir imagens**
+- Converter as imagens de assets (rebeca, lucas, event-1, event-2) para WebP com fallback, reduzindo ~60-70% do tamanho
 
 ### Arquivos a editar
-- `src/components/HeroSection.tsx`
-- `src/components/ProvocacaoSection.tsx`
-- `src/components/PontoCegoSection.tsx`
-- `src/components/MetodosSection.tsx`
-- `src/components/DominarSection.tsx`
-- `src/components/FechamentoSection.tsx`
-- `src/components/ProvaSocialSection.tsx`
-- `src/components/BiosSection.tsx`
+- `index.html` — preconnect fonts, preload hero image
+- `src/index.css` — remover @import de fonte
+- `src/components/HeroSection.tsx` — fetchpriority na bg image
+- `src/components/MetodosSection.tsx` — lazy loading imagens
+- `src/components/ProvaSocialSection.tsx` — lazy loading imagens
+- `src/components/ProvocacaoSection.tsx` — otimizar imports lucide
+- `src/components/PontoCegoSection.tsx` — otimizar imports lucide
+- `src/components/DominarSection.tsx` — otimizar imports lucide
+- `src/components/FechamentoSection.tsx` — otimizar imports lucide
+
+### Resultado esperado
+- FCP de 4.5s → ~1.5-2s
+- Full load de 5.8s → ~2.5-3s
+- Transfer size reduzido em ~50%
 
