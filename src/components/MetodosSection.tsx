@@ -1,66 +1,55 @@
 import rebecaImg from "@/assets/rebeca_maia.webp";
 import lucasImg from "@/assets/lucas.webp";
-import { Award } from "lucide-react";
-
-const mentors = [
-  {
-    img: rebecaImg,
-    title: "Arquitetura de Gestão",
-    name: "Rebeca Maia",
-    role: "Mentora de Gestão",
-    text: "Como desenhar processos e formar uma equipe que pensa e decide por você, eliminando a fadiga de decisão e devolvendo o seu tempo estratégico.",
-    bio: "Mentora com 10+ anos de experiência em destravar operações familiares e transformar empresas dependentes do dono em organizações autônomas.",
-  },
-  {
-    img: lucasImg,
-    title: "Inteligência Financeira",
-    name: "Lucas Nigro",
-    role: "Especialista Financeiro",
-    text: "Como dominar seus indicadores para encontrar o lucro que está fugindo do seu controle e garantir que cada movimento de escala seja financeiramente viável.",
-    bio: "Especialista em gestão financeira de alta complexidade, ajudando empresários a encontrar lucro real e escalar com segurança.",
-  },
-];
 
 const MetodosSection = () => (
   <section className="py-16 sm:py-24 px-6">
-    <div className="container max-w-4xl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-12">
-        Mentores
+    <div className="container max-w-3xl text-center">
+      <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
+        Quem são os Mentores
       </h2>
-      <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-        {mentors.map((m) => (
-          <div
-            key={m.name}
-            className="group border border-border rounded-xl overflow-hidden bg-card hover:border-primary/50 hover:shadow-[0_0_30px_hsl(var(--primary)/0.1)] transition-all duration-300"
-          >
-            <div className="aspect-[3/4] overflow-hidden bg-secondary flex items-end justify-center">
-              <img
-                src={m.img}
-                alt={m.name}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
-              />
-            </div>
-            <div className="p-6 sm:p-8">
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-0.5 tracking-tight">
-                {m.name}
-              </h3>
-              <span className="text-primary text-sm font-semibold uppercase tracking-wider">
-                {m.role}
-              </span>
-              <h4 className="text-lg font-bold text-foreground mt-4 mb-1">
-                {m.title}
-              </h4>
-              <p className="text-foreground text-sm sm:text-base leading-relaxed">
-                {m.text}
-              </p>
-              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mt-3 border-t border-border pt-3">
-                {m.bio}
-              </p>
-            </div>
-          </div>
-        ))}
+      <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto mb-10 leading-relaxed">
+        Mais de 10 anos desenhando estratégias para grandes holdings e
+        acelerando PMEs com gestão real e inteligência financeira.
+      </p>
+
+      <div className="flex justify-center gap-6 mb-8">
+        <img
+          src={rebecaImg}
+          alt="Rebeca Maia"
+          loading="lazy"
+          decoding="async"
+          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover object-top border-2 border-primary/30"
+        />
+        <img
+          src={lucasImg}
+          alt="Lucas Nigro"
+          loading="lazy"
+          decoding="async"
+          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover object-top border-2 border-primary/30"
+        />
+      </div>
+
+      <div className="text-left space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+        <p>
+          <span className="text-foreground font-semibold">Rebeca Maia</span> é
+          mentora de gestão com mais de uma década transformando empresas
+          dependentes do dono em organizações autônomas. Já atuou em operações
+          familiares e grandes holdings, desenhando processos que libertam o
+          empresário da operação.
+        </p>
+        <p>
+          <span className="text-foreground font-semibold">Lucas Nigro</span> é
+          especialista em gestão financeira de alta complexidade. Ajuda
+          empresários a encontrar o lucro real dentro do próprio negócio e a
+          escalar com segurança, usando indicadores que eliminam decisões no
+          escuro.
+        </p>
+        <p>
+          Juntos, unem <span className="text-foreground font-medium">Arquitetura de Processos</span> e{" "}
+          <span className="text-foreground font-medium">Engenharia de Caixa</span> num
+          plano integrado para empresários que já faturam, mas ainda não
+          lucraram de verdade.
+        </p>
       </div>
     </div>
   </section>
