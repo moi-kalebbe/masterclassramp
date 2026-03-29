@@ -29,7 +29,8 @@ const Index = () => (
       </div>
     </section>
 
-    <footer className="py-8 px-6 border-t border-border/30">
+    <footer className="py-8 px-6 border-t border-border/30 flex flex-col items-center gap-4">
+      <img src={amchamLogo} alt="Amcham" className="h-10 opacity-60" />
       <p className="text-center text-xs text-muted-foreground/60">
         © {new Date().getFullYear()} Masterclass — Todos os direitos reservados.
       </p>
