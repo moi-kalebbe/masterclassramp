@@ -3,6 +3,7 @@ import ProblemaSection from "@/components/ProblemaSection";
 import SolucaoSection from "@/components/SolucaoSection";
 import MetodosSection from "@/components/MetodosSection";
 import CtaButton from "@/components/CtaButton";
+import amchamLogo from "@/assets/amcham.png";
 
 const Index = () => (
   <main className="bg-background min-h-screen">
