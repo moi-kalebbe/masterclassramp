@@ -3,6 +3,7 @@ import ProblemaSection from "@/components/ProblemaSection";
 import LogosCarouselSection from "@/components/LogosCarouselSection";
 import SolucaoSection from "@/components/SolucaoSection";
 import MetodosSection from "@/components/MetodosSection";
+import ParaVoceSection from "@/components/ParaVoceSection";
 import CtaButton from "@/components/CtaButton";
 
 
@@ -13,6 +14,7 @@ const Index = () => (
     <LogosCarouselSection />
     <SolucaoSection />
     <MetodosSection />
+    <ParaVoceSection />
 
     {/* CTA final */}
     <section className="relative py-20 sm:py-28 px-6 text-center overflow-hidden">
