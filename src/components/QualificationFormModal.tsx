@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -74,10 +75,15 @@ const initial: FormState = {
 
 type Result = "qualified" | "not_qualified" | null;
 
+const TOTAL_STEPS = 4;
+
 const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalProps) => {
   const [form, setForm] = useState<FormState>(initial);
   const [result, setResult] = useState<Result>(null);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [step, setStep] = useState(0); // 0 = intro, 1-4 = form steps
+  const [direction, setDirection] = useState<"next" | "prev">("next");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const set = (key: keyof FormState, value: string | string[]) =>
     setForm((p) => ({ ...p, [key]: value }));
@@ -90,24 +96,47 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
         : [...p.desafios, d],
     }));
 
-  const validate = (): boolean => {
+  const validateStep = (s: number): boolean => {
     const e: Partial<Record<keyof FormState, string>> = {};
-    if (!form.nome.trim()) e.nome = "Obrigatório";
-    if (!form.sobrenome.trim()) e.sobrenome = "Obrigatório";
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = "Email inválido";
-    if (!form.whatsapp.trim() || form.whatsapp.replace(/\D/g, "").length < 10)
-      e.whatsapp = "WhatsApp inválido";
-    if (!form.ramo) e.ramo = "Selecione um ramo";
-    if (form.ramo === "Outro" && !form.ramoOutro.trim()) e.ramoOutro = "Especifique";
-    if (!form.colaboradores) e.colaboradores = "Selecione";
-    if (!form.faturamento) e.faturamento = "Selecione";
+    if (s === 1) {
+      if (!form.nome.trim()) e.nome = "Obrigatório";
+      if (!form.sobrenome.trim()) e.sobrenome = "Obrigatório";
+      if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+        e.email = "Email inválido";
+      if (!form.whatsapp.trim() || form.whatsapp.replace(/\D/g, "").length < 10)
+        e.whatsapp = "WhatsApp inválido";
+    }
+    if (s === 2) {
+      if (!form.ramo) e.ramo = "Selecione um ramo";
+      if (form.ramo === "Outro" && !form.ramoOutro.trim()) e.ramoOutro = "Especifique";
+    }
+    if (s === 3) {
+      if (!form.colaboradores) e.colaboradores = "Selecione";
+      if (!form.faturamento) e.faturamento = "Selecione";
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
+  const goNext = () => {
+    if (step > 0 && !validateStep(step)) return;
+    setDirection("next");
+    if (step < TOTAL_STEPS) {
+      setStep(step + 1);
+    } else {
+      handleSubmit();
+    }
+  };
+
+  const goPrev = () => {
+    if (step > 0) {
+      setDirection("prev");
+      setStep(step - 1);
+      setErrors({});
+    }
+  };
+
   const handleSubmit = () => {
-    if (!validate()) return;
     const disqualified =
       form.colaboradores === "Só eu" || form.faturamento === "Entre 10k e 50k";
     setResult(disqualified ? "not_qualified" : "qualified");
@@ -119,6 +148,7 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
       setForm(initial);
       setResult(null);
       setErrors({});
+      setStep(0);
     }, 300);
   };
 
@@ -184,41 +214,28 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
     );
   }
 
-  // ── Qualified (inspired by reference 2) ──
+  // ── Qualified ──
   if (result === "qualified") {
     return (
       <Dialog open={open} onOpenChange={handleClose}>
         <DialogContent className="max-w-md w-[92vw] rounded-2xl border-border/30 bg-card/95 backdrop-blur-xl p-0 shadow-[0_0_80px_hsl(var(--primary)/0.08)] overflow-hidden">
           <DialogTitle className="sr-only">Convite Aprovado</DialogTitle>
-
-          {/* Subtle top glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-
           <div className="relative text-center px-8 py-10 space-y-6">
-            {/* Check icon like reference */}
             <div className="mx-auto w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
               <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-
             <div>
-              <h3 className="text-2xl font-black text-foreground mb-1">
-                Parabéns!
-              </h3>
-              <p className="text-lg font-bold text-foreground">
-                Seu perfil foi aprovado.
-              </p>
+              <h3 className="text-2xl font-black text-foreground mb-1">Parabéns!</h3>
+              <p className="text-lg font-bold text-foreground">Seu perfil foi aprovado.</p>
             </div>
-
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
               Você tem o perfil ideal para essa masterclass. Entre no grupo
               exclusivo do WhatsApp para receber todas as informações.
             </p>
-
-            {/* Divider */}
             <div className="w-12 h-0.5 bg-border/50 mx-auto rounded-full" />
-
             <a
               href="#LINK_WHATSAPP"
               target="_blank"
@@ -227,7 +244,6 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
             >
               Entrar no Grupo do WhatsApp
             </a>
-
             <button
               onClick={handleClose}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -240,168 +256,175 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
     );
   }
 
-  // ── Form ──
-  return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg w-[95vw] max-h-[90vh] overflow-y-auto rounded-2xl border-border/30 bg-card/95 backdrop-blur-xl p-6 sm:p-8 shadow-[0_0_80px_hsl(var(--background)/0.9)]">
-        <DialogTitle className="text-xl font-black text-foreground text-center mb-1 uppercase tracking-tight">
-          Solicitar Convite
-        </DialogTitle>
-        <p className="text-sm text-muted-foreground text-center mb-6">
-          Preencha para verificar se seu perfil é compatível com a masterclass.
-        </p>
-
-        <div className="space-y-5">
-          {/* Nome e Sobrenome */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className={labelClass}>Nome *</label>
-              <input
-                className={inputClass}
-                placeholder="Seu nome"
-                value={form.nome}
-                onChange={(e) => set("nome", e.target.value)}
-                maxLength={50}
-              />
-              {errors.nome && <p className={errorClass}>{errors.nome}</p>}
-            </div>
-            <div>
-              <label className={labelClass}>Sobrenome *</label>
-              <input
-                className={inputClass}
-                placeholder="Seu sobrenome"
-                value={form.sobrenome}
-                onChange={(e) => set("sobrenome", e.target.value)}
-                maxLength={50}
-              />
-              {errors.sobrenome && <p className={errorClass}>{errors.sobrenome}</p>}
+  // ── Step content ──
+  const renderStep = () => {
+    switch (step) {
+      case 0:
+        return (
+          <div className="space-y-6 text-center">
+            <div className="space-y-3">
+              <h3 className="text-lg font-black text-foreground uppercase tracking-tight">
+                Aplicação de Acesso
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                As vagas são limitadas para garantir o nível técnico do grupo. Preencha os dados abaixo para validarmos se o momento atual da sua empresa está alinhado com nossa estratégia de escala.
+              </p>
+              <p className="text-sm text-primary font-semibold italic">
+                Não é um evento de massa; é uma mesa de decisões.
+              </p>
             </div>
           </div>
-
-          {/* Email */}
-          <div>
-            <label className={labelClass}>Email *</label>
-            <input
-              type="email"
-              className={inputClass}
-              placeholder="seu@email.com"
-              value={form.email}
-              onChange={(e) => set("email", e.target.value)}
-              maxLength={100}
-            />
-            {errors.email && <p className={errorClass}>{errors.email}</p>}
+        );
+      case 1:
+        return (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className={labelClass}>Nome *</label>
+                <input className={inputClass} placeholder="Seu nome" value={form.nome} onChange={(e) => set("nome", e.target.value)} maxLength={50} />
+                {errors.nome && <p className={errorClass}>{errors.nome}</p>}
+              </div>
+              <div>
+                <label className={labelClass}>Sobrenome *</label>
+                <input className={inputClass} placeholder="Seu sobrenome" value={form.sobrenome} onChange={(e) => set("sobrenome", e.target.value)} maxLength={50} />
+                {errors.sobrenome && <p className={errorClass}>{errors.sobrenome}</p>}
+              </div>
+            </div>
+            <div>
+              <label className={labelClass}>Email *</label>
+              <input type="email" className={inputClass} placeholder="seu@email.com" value={form.email} onChange={(e) => set("email", e.target.value)} maxLength={100} />
+              {errors.email && <p className={errorClass}>{errors.email}</p>}
+            </div>
+            <div>
+              <label className={labelClass}>WhatsApp *</label>
+              <input type="tel" className={inputClass} placeholder="(00) 00000-0000" value={form.whatsapp} onChange={(e) => set("whatsapp", e.target.value)} maxLength={20} />
+              {errors.whatsapp && <p className={errorClass}>{errors.whatsapp}</p>}
+            </div>
           </div>
-
-          {/* WhatsApp */}
-          <div>
-            <label className={labelClass}>WhatsApp *</label>
-            <input
-              type="tel"
-              className={inputClass}
-              placeholder="(00) 00000-0000"
-              value={form.whatsapp}
-              onChange={(e) => set("whatsapp", e.target.value)}
-              maxLength={20}
-            />
-            {errors.whatsapp && <p className={errorClass}>{errors.whatsapp}</p>}
-          </div>
-
-          {/* Ramo */}
-          <div>
+        );
+      case 2:
+        return (
+          <div className="space-y-4">
             <label className={labelClass}>Ramo de atuação *</label>
             <div className="grid grid-cols-2 gap-2">
               {[...RAMO_OPTIONS, "Outro"].map((r) => (
                 <label key={r} className={chipClass(form.ramo === r)}>
-                  <input
-                    type="radio"
-                    name="ramo"
-                    value={r}
-                    checked={form.ramo === r}
-                    onChange={() => set("ramo", r)}
-                    className="sr-only"
-                  />
+                  <input type="radio" name="ramo" value={r} checked={form.ramo === r} onChange={() => set("ramo", r)} className="sr-only" />
                   <span>{r}</span>
                 </label>
               ))}
             </div>
             {form.ramo === "Outro" && (
-              <input
-                className={`${inputClass} mt-2`}
-                placeholder="Qual ramo?"
-                value={form.ramoOutro}
-                onChange={(e) => set("ramoOutro", e.target.value)}
-                maxLength={50}
-              />
+              <input className={`${inputClass} mt-2`} placeholder="Qual ramo?" value={form.ramoOutro} onChange={(e) => set("ramoOutro", e.target.value)} maxLength={50} />
             )}
             {errors.ramo && <p className={errorClass}>{errors.ramo}</p>}
           </div>
-
-          {/* Colaboradores */}
-          <div>
-            <label className={labelClass}>Quantos colaboradores? *</label>
-            <div className="grid grid-cols-2 gap-2">
-              {COLABORADORES_OPTIONS.map((c) => (
-                <label key={c} className={chipClass(form.colaboradores === c)}>
-                  <input
-                    type="radio"
-                    name="colaboradores"
-                    value={c}
-                    checked={form.colaboradores === c}
-                    onChange={() => set("colaboradores", c)}
-                    className="sr-only"
-                  />
-                  <span>{c}</span>
-                </label>
-              ))}
+        );
+      case 3:
+        return (
+          <div className="space-y-5">
+            <div>
+              <label className={labelClass}>Quantos colaboradores? *</label>
+              <div className="grid grid-cols-2 gap-2">
+                {COLABORADORES_OPTIONS.map((c) => (
+                  <label key={c} className={chipClass(form.colaboradores === c)}>
+                    <input type="radio" name="colaboradores" value={c} checked={form.colaboradores === c} onChange={() => set("colaboradores", c)} className="sr-only" />
+                    <span>{c}</span>
+                  </label>
+                ))}
+              </div>
+              {errors.colaboradores && <p className={errorClass}>{errors.colaboradores}</p>}
             </div>
-            {errors.colaboradores && <p className={errorClass}>{errors.colaboradores}</p>}
-          </div>
-
-          {/* Faturamento */}
-          <div>
-            <label className={labelClass}>Faturamento mensal *</label>
-            <div className="grid grid-cols-1 gap-2">
-              {FATURAMENTO_OPTIONS.map((f) => (
-                <label key={f} className={chipClass(form.faturamento === f)}>
-                  <input
-                    type="radio"
-                    name="faturamento"
-                    value={f}
-                    checked={form.faturamento === f}
-                    onChange={() => set("faturamento", f)}
-                    className="sr-only"
-                  />
-                  <span>{f}</span>
-                </label>
-              ))}
+            <div>
+              <label className={labelClass}>Faturamento mensal *</label>
+              <div className="grid grid-cols-1 gap-2">
+                {FATURAMENTO_OPTIONS.map((f) => (
+                  <label key={f} className={chipClass(form.faturamento === f)}>
+                    <input type="radio" name="faturamento" value={f} checked={form.faturamento === f} onChange={() => set("faturamento", f)} className="sr-only" />
+                    <span>{f}</span>
+                  </label>
+                ))}
+              </div>
+              {errors.faturamento && <p className={errorClass}>{errors.faturamento}</p>}
             </div>
-            {errors.faturamento && <p className={errorClass}>{errors.faturamento}</p>}
           </div>
-
-          {/* Desafios */}
-          <div>
+        );
+      case 4:
+        return (
+          <div className="space-y-4">
             <label className={labelClass}>Quais seus maiores desafios?</label>
             <div className="grid grid-cols-1 gap-2">
               {DESAFIOS_OPTIONS.map((d) => (
                 <label key={d} className={chipClass(form.desafios.includes(d))}>
-                  <input
-                    type="checkbox"
-                    checked={form.desafios.includes(d)}
-                    onChange={() => toggleDesafio(d)}
-                    className="sr-only"
-                  />
+                  <input type="checkbox" checked={form.desafios.includes(d)} onChange={() => toggleDesafio(d)} className="sr-only" />
                   <span>{d}</span>
                 </label>
               ))}
             </div>
           </div>
+        );
+      default:
+        return null;
+    }
+  };
 
-          {/* Submit */}
-          <button
-            onClick={handleSubmit}
-            className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-bold text-sm uppercase tracking-wide hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] transition-all active:scale-[0.98]"
+  return (
+    <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="max-w-lg w-[95vw] rounded-2xl border-border/30 bg-card/95 backdrop-blur-xl p-6 sm:p-8 shadow-[0_0_80px_hsl(var(--background)/0.9)]">
+        <DialogTitle className="text-xl font-black text-foreground text-center mb-1 uppercase tracking-tight">
+          Solicitar Convite
+        </DialogTitle>
+
+        {/* Progress bar */}
+        {step > 0 && (
+          <div className="flex items-center gap-1.5 mb-4">
+            {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-1 flex-1 rounded-full transition-all duration-500 ${
+                  i < step ? "bg-primary" : "bg-border/40"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Step content with slide animation */}
+        <div ref={containerRef} className="overflow-hidden">
+          <div
+            key={step}
+            className={`animate-fade-up`}
+            style={{ animationDuration: "0.3s" }}
           >
-            Enviar Solicitação
+            {renderStep()}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex items-center justify-between mt-6 gap-3">
+          {step > 0 ? (
+            <button
+              onClick={goPrev}
+              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ChevronLeft className="w-4 h-4" /> Voltar
+            </button>
+          ) : (
+            <div />
+          )}
+
+          <button
+            onClick={goNext}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all active:scale-[0.98] ${
+              step === TOTAL_STEPS
+                ? "bg-primary text-primary-foreground hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] w-full justify-center"
+                : step === 0
+                ? "bg-primary text-primary-foreground hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] mx-auto"
+                : "bg-primary text-primary-foreground hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)]"
+            }`}
+          >
+            {step === 0 ? "Iniciar Aplicação" : step === TOTAL_STEPS ? "Enviar Solicitação" : "Próximo"}
+            {step > 0 && step < TOTAL_STEPS && <ChevronRight className="w-4 h-4" />}
           </button>
         </div>
       </DialogContent>
