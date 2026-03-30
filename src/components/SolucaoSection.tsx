@@ -1,16 +1,16 @@
-import { Settings, BarChart3 } from "lucide-react";
+import { Crosshair, TrendingUp } from "lucide-react";
 
 const pillars = [
   {
-    icon: Settings,
-    title: "Arquitetura de Processos",
+    icon: Crosshair,
+    title: "Gestão Estratégica",
     mentor: "com Rebeca Maia",
     description:
-      "Como desenhar processos e formar uma equipe que pensa e decide por você, eliminando a fadiga de decisão e devolvendo seu tempo estratégico.",
+      "Como conseguir o controle real da sua empresa através de uma gestão estratégica e inteligente, criando previsibilidade, domínio de dados e ações realmente eficazes.",
   },
   {
-    icon: BarChart3,
-    title: "Engenharia de Caixa",
+    icon: TrendingUp,
+    title: "Inteligência Financeira",
     mentor: "com Lucas Nigro",
     description:
       "Como dominar seus indicadores para encontrar o lucro que está fugindo do seu controle e garantir que cada movimento de escala seja financeiramente viável.",
@@ -44,8 +44,8 @@ const SolucaoSection = () => (
             <div className="absolute inset-0 rounded-2xl bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
             <div className="relative">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-                <p.icon className="w-6 h-6 text-primary" />
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
+                <p.icon className="w-8 h-8 text-primary" strokeWidth={1.5} />
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1">
                 {p.title}
