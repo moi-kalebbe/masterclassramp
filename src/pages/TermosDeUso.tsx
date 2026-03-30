@@ -25,9 +25,9 @@ export default function TermosDeUso() {
         <h2 className="text-foreground">1. Aceitação dos termos</h2>
         <p className="text-muted-foreground/70">
           Ao acessar nossas páginas e se inscrever em qualquer evento, masterclass ou conteúdo da
-          <strong className="text-foreground"> Rumo à Máxima Potência</strong> — nome fantasia da
+          <strong className="text-foreground"> Rumo à Máxima Potência</strong>, nome fantasia da
           <strong className="text-foreground"> RM Desenvolvimento Humano e Educação Corporativa LTDA</strong>,
-          CNPJ <strong className="text-foreground">49.585.305/0001-00</strong> — você declara ter lido,
+          CNPJ <strong className="text-foreground">49.585.305/0001-00</strong>, você declara ter lido,
           compreendido e concordado com os presentes Termos de Uso em sua totalidade.
         </p>
         <p className="text-muted-foreground/70">
@@ -62,8 +62,8 @@ export default function TermosDeUso() {
 
         <h2 className="text-foreground">4. Propriedade intelectual</h2>
         <p className="text-muted-foreground/70">
-          Todo o conteúdo apresentado na masterclass — incluindo apresentações, metodologias, materiais
-          complementares, gravações e demais produções — é de propriedade exclusiva da
+          Todo o conteúdo apresentado na masterclass, incluindo apresentações, metodologias, materiais
+          complementares, gravações e demais produções, é de propriedade exclusiva da
           Rumo à Máxima Potência e/ou dos especialistas convidados.
         </p>
         <p className="text-muted-foreground/70">É expressamente proibido ao participante:</p>

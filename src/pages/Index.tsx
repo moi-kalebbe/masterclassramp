@@ -27,7 +27,7 @@ const Index = () => (
         <Link to="/politica-de-privacidade" className="hover:text-primary transition underline underline-offset-2">Política de Privacidade</Link>
       </div>
       <p className="text-center text-xs text-muted-foreground/60">
-        © {new Date().getFullYear()} Masterclass — Todos os direitos reservados.
+        © {new Date().getFullYear()} Masterclass. Todos os direitos reservados.
       </p>
     </footer>
   </main>

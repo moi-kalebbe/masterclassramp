@@ -81,8 +81,8 @@ export default function PoliticaPrivacidade() {
         <h2 className="text-foreground">5. Compartilhamento de dados</h2>
         <p className="text-muted-foreground/70">Seus dados podem ser acessados pelos seguintes agentes, sempre dentro das finalidades descritas:</p>
         <ul className="text-muted-foreground/70">
-          <li><strong className="text-foreground">Google LLC</strong> — armazenamento via Google Sheets</li>
-          <li><strong className="text-foreground">Equipe interna da Rumo à Máxima Potência</strong> — para gestão das inscrições e contato com inscritos</li>
+          <li><strong className="text-foreground">Google LLC</strong> - armazenamento via Google Sheets</li>
+          <li><strong className="text-foreground">Equipe interna da Rumo à Máxima Potência</strong> - para gestão das inscrições e contato com inscritos</li>
         </ul>
         <p className="text-muted-foreground/70">
           Não compartilhamos seus dados com plataformas de publicidade, corretores de dados ou quaisquer terceiros

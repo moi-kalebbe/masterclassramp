@@ -62,7 +62,7 @@ const HeroSection = () => (
             <div className="flex-1 flex justify-center sm:justify-end">
               <img
                 src={mentorsImg}
-                alt="Rebeca Maia e Lucas Nigro — Mentores da Masterclass"
+                alt="Rebeca Maia e Lucas Nigro - Mentores da Masterclass"
                 className="w-[380px] sm:w-[480px] md:w-[560px] lg:w-[660px] h-auto drop-shadow-[0_0_60px_hsl(var(--primary)/0.15)]"
                 loading="eager"
                 decoding="async"

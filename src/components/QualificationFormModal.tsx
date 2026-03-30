@@ -177,7 +177,7 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
             <p className="text-sm text-muted-foreground leading-relaxed">
               Analisamos seu perfil e entendemos que, neste momento, a
               masterclass pode não ser a mais indicada para o estágio atual do
-              seu negócio. E tudo bem — isso só indica que ainda não é a hora
+              seu negócio. E tudo bem, isso só indica que ainda não é a hora
               certa.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -191,7 +191,7 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm text-foreground hover:border-primary/40 transition-all"
               >
-                📊 Lucas Nigro — @lucasnigro.financas
+                📊 Lucas Nigro - @lucasnigro.financas
               </a>
               <a
                 href="https://www.instagram.com/rebecarmaia/"
@@ -199,7 +199,7 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-border/40 bg-background/50 text-sm text-foreground hover:border-primary/40 transition-all"
               >
-                ⚙️ Rebeca Maia — @rebecarmaia
+                ⚙️ Rebeca Maia - @rebecarmaia
               </a>
             </div>
             <button

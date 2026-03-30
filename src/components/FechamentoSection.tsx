@@ -24,7 +24,7 @@ const FechamentoSection = () => (
           {/* Date highlight */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
             <CalendarDays className="w-4 h-4 text-primary" />
-            <span className="text-primary font-bold text-sm">09 de Abril — Ao Vivo</span>
+            <span className="text-primary font-bold text-sm">09 de Abril - Ao Vivo</span>
           </div>
 
           <span className="block text-primary text-sm font-semibold uppercase tracking-widest mb-4">

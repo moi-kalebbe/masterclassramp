@@ -28,7 +28,7 @@ const ProblemaSection = () => (
       </h2>
       <p className="text-muted-foreground text-center text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
         Para cada 10% de crescimento no faturamento, a complexidade operacional
-        cresce 50%. Sem a estrutura certa, o crescimento vira caos — e o lucro
+        cresce 50%. Sem a estrutura certa, o crescimento vira caos e o lucro
         desaparece.
       </p>
       <div className="space-y-4">
