@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -6,27 +6,44 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { signIn, isAdmin, user } = useAuth();
+  const [submitting, setSubmitting] = useState(false);
+  const { signIn, isAdmin, user, loading } = useAuth();
   const navigate = useNavigate();
 
-  if (user && isAdmin) {
-    navigate("/admin", { replace: true });
-    return null;
-  }
+  // Redirect when fully loaded and confirmed admin
+  useEffect(() => {
+    if (!loading && user && isAdmin) {
+      navigate("/admin", { replace: true });
+    }
+  }, [loading, user, isAdmin, navigate]);
+
+  // Show "not admin" feedback after login resolves
+  useEffect(() => {
+    if (!loading && user && !isAdmin && submitting) {
+      setError("Esta conta não possui acesso administrativo.");
+      setSubmitting(false);
+    }
+  }, [loading, user, isAdmin, submitting]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
+    setSubmitting(true);
     const { error } = await signIn(email, password);
     if (error) {
       setError("Email ou senha inválidos.");
-    } else {
-      navigate("/admin", { replace: true });
+      setSubmitting(false);
     }
-    setLoading(false);
+    // Don't navigate here — useEffect handles it after loading resolves
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -62,10 +79,10 @@ const AdminLogin = () => {
           {error && <p className="text-sm text-red-400">{error}</p>}
           <button
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             className="w-full px-6 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm uppercase tracking-wide transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] disabled:opacity-50"
           >
-            {loading ? "Entrando..." : "Entrar"}
+            {submitting ? "Entrando..." : "Entrar"}
           </button>
         </form>
       </div>

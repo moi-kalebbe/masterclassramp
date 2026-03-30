@@ -28,6 +28,7 @@ const Admin = () => {
   const [bulkTemplate, setBulkTemplate] = useState(TEMPLATES[0].name);
   const [loadingData, setLoadingData] = useState(true);
 
+  // Only redirect after auth fully resolves
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) {
       navigate("/admin/login", { replace: true });
@@ -45,8 +46,8 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    if (user && isAdmin) fetchLeads();
-  }, [user, isAdmin]);
+    if (!loading && user && isAdmin) fetchLeads();
+  }, [user, isAdmin, loading]);
 
   const filteredLeads = useMemo(() => {
     return leads.filter((l) => {
@@ -98,13 +99,15 @@ const Admin = () => {
     setSelectedLeads([]);
   };
 
-  if (loading || loadingData) {
+  if (loading || (user && isAdmin && loadingData)) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-muted-foreground">Carregando...</p>
       </div>
     );
   }
+
+  if (!user || !isAdmin) return null;
 
   return (
     <div className="min-h-screen bg-background">
