@@ -32,10 +32,10 @@ const MetodosSection = () => (
               alt={m.name}
               loading="lazy"
               decoding="async"
-              className="w-40 h-48 sm:w-48 sm:h-56 rounded-xl object-cover object-top flex-shrink-0 border-2 border-primary/20"
+              className="w-52 h-64 sm:w-64 sm:h-80 rounded-xl object-cover object-top flex-shrink-0 border-2 border-primary/20"
             />
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-primary mb-3">
                 {m.name}
               </h3>
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
