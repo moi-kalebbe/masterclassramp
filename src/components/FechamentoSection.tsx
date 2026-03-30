@@ -7,11 +7,14 @@ const perks = [
   { icon: Zap, text: "Prioridade no plano de destrave" },
 ];
 
-const FechamentoSection = () => (
+interface FechamentoSectionProps {
+  onCtaClick?: () => void;
+}
+
+const FechamentoSection = ({ onCtaClick }: FechamentoSectionProps) => (
   <section className="py-20 sm:py-28 px-6">
     <div className="container max-w-3xl text-center">
       <div className="relative border border-primary/30 rounded-2xl p-8 sm:p-14 border-glow bg-card/40 overflow-hidden">
-        {/* Subtle dot pattern */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -21,7 +24,6 @@ const FechamentoSection = () => (
         />
 
         <div className="relative z-10">
-          {/* Date highlight */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
             <CalendarDays className="w-4 h-4 text-primary" />
             <span className="text-primary font-bold text-sm">09 de Abril - Ao Vivo</span>
@@ -47,7 +49,7 @@ const FechamentoSection = () => (
             ))}
           </div>
 
-          <CtaButton />
+          <CtaButton onClick={onCtaClick} />
         </div>
       </div>
     </div>

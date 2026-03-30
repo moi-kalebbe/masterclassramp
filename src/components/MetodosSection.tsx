@@ -15,7 +15,11 @@ const mentors = [
   },
 ];
 
-const MetodosSection = () => (
+interface MetodosSectionProps {
+  onCtaClick?: () => void;
+}
+
+const MetodosSection = ({ onCtaClick }: MetodosSectionProps) => (
   <section className="py-16 sm:py-24 px-6">
     <div className="container max-w-5xl">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground mb-12 text-center uppercase tracking-tight">
@@ -34,6 +38,8 @@ const MetodosSection = () => (
               loading="lazy"
               decoding="async"
               className="w-52 h-64 sm:w-64 sm:h-80 rounded-xl object-cover object-top flex-shrink-0 border-2 border-primary/20"
+              width={256}
+              height={320}
             />
             <div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-primary mb-3">
@@ -47,7 +53,7 @@ const MetodosSection = () => (
         ))}
       </div>
       <div className="flex justify-center mt-12">
-        <CtaButton />
+        <CtaButton onClick={onCtaClick} />
       </div>
     </div>
   </section>
