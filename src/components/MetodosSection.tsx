@@ -18,8 +18,8 @@ const mentors = [
 const MetodosSection = () => (
   <section className="py-16 sm:py-24 px-6">
     <div className="container max-w-5xl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-12 text-center">
-        Quem estará com você
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground mb-12 text-center uppercase tracking-tight">
+        Quem estará <span className="text-primary">com você</span>
       </h2>
 
       <div className="flex flex-col gap-10">
