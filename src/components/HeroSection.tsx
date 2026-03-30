@@ -18,7 +18,7 @@ const HeroSection = () => (
       <div className="flex flex-col items-center text-center pt-10 sm:pt-12 px-4 sm:px-6">
         {/* Badge */}
         <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
-          Vagas Limitadas • Masterclass Exclusiva
+          Masterclass exclusiva para empresários
         </span>
 
         {/* Headline */}
