@@ -14,14 +14,14 @@ const HeroSection = () => (
     {/* Content */}
     <div className="relative z-10 flex flex-col flex-1">
       {/* Top: Badge + Title + Subtitle */}
-      <div className="flex flex-col items-center text-center pt-12 sm:pt-16 px-6">
+      <div className="flex flex-col items-center text-center pt-10 sm:pt-12 px-6">
         {/* Badge */}
-        <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-8 backdrop-blur-sm">
+        <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
           Vagas Limitadas • Masterclass Exclusiva
         </span>
 
         {/* Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] mb-6 text-foreground uppercase tracking-tight">
+        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] mb-4 text-foreground uppercase tracking-tight">
           A Arquitetura
           <br />
           <span className="text-primary text-glow">do Lucro</span>
@@ -35,7 +35,7 @@ const HeroSection = () => (
       </div>
 
       {/* Bottom: CTA + Date on the left, Mentors spanning bottom */}
-      <div className="relative pt-2">
+      <div className="relative pt-1">
         {/* Gradient glow behind mentors */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -44,9 +44,17 @@ const HeroSection = () => (
             {/* Left: CTA + Date */}
             <div className="flex flex-col items-start gap-4 pb-8 sm:pb-12 lg:pb-16 z-10">
               <CtaButton />
-              <p className="text-foreground font-semibold text-sm sm:text-base tracking-wide">
-                09 de Abril | 19H | Online
-              </p>
+              <div className="flex items-center gap-3 text-foreground font-semibold text-sm sm:text-base tracking-wide">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
+                  📅 09 de Abril
+                </span>
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
+                  🕖 19H
+                </span>
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
+                  💻 Online
+                </span>
+              </div>
             </div>
 
             {/* Right: Mentors image */}
@@ -54,7 +62,7 @@ const HeroSection = () => (
               <img
                 src={mentorsImg}
                 alt="Rebeca Maia e Lucas Nigro — Mentores da Masterclass"
-                className="w-[320px] sm:w-[420px] md:w-[500px] lg:w-[580px] h-auto drop-shadow-[0_0_60px_hsl(var(--primary)/0.15)]"
+                className="w-[380px] sm:w-[480px] md:w-[560px] lg:w-[660px] h-auto drop-shadow-[0_0_60px_hsl(var(--primary)/0.15)]"
                 loading="eager"
                 decoding="async"
               />
