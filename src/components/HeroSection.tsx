@@ -1,5 +1,6 @@
 import mentorsImg from "@/assets/beca_e_lucas.png";
 import bgImg from "@/assets/background.png";
+import { CalendarDays, Clock, Monitor } from "lucide-react";
 import CtaButton from "./CtaButton";
 
 const HeroSection = () => (
@@ -46,13 +47,13 @@ const HeroSection = () => (
               <CtaButton />
               <div className="flex items-center gap-3 text-foreground font-semibold text-sm sm:text-base tracking-wide">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
-                  📅 09 de Abril
+                  <CalendarDays className="w-4 h-4 text-primary" /> 09 de Abril
                 </span>
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
-                  🕖 19H
+                  <Clock className="w-4 h-4 text-primary" /> 19H
                 </span>
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
-                  💻 Online
+                  <Monitor className="w-4 h-4 text-primary" /> Online
                 </span>
               </div>
             </div>
