@@ -29,7 +29,7 @@ const LogosCarouselSection = () => (
         Métodos aplicados em <span className="text-primary">diversas empresas</span>
       </h2>
       <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-        Com uma metodologia pautada em métricas de alto desempenho, Lucas e Rebeca acumulam um portfólio de empresas que alcançaram novos patamares de eficiência. A aplicação de estratégias validadas permite que seus métodos atuem diretamente no aumento da performance operacional e na otimização dos resultados financeiros das organizações atendidas.
+        Com uma metodologia pautada em métricas de alto desempenho, Lucas e Rebeca acumulam um portfólio de empresas que alcançaram novos patamares de eficiência e resultados.
       </p>
     </div>
 
