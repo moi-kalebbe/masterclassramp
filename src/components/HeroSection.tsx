@@ -3,7 +3,7 @@ import bgImg from "@/assets/background.png";
 import CtaButton from "./CtaButton";
 
 const HeroSection = () => (
-  <section className="relative min-h-screen flex flex-col overflow-hidden">
+  <section className="relative min-h-[85vh] flex flex-col overflow-hidden">
     {/* Network background */}
     <div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -28,14 +28,14 @@ const HeroSection = () => (
         </h1>
 
         {/* Subheadline */}
-        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8">
+        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Como Estruturar Gestão e Finanças para Escalar sua empresa
           com previsibilidade e lucro real.
         </p>
       </div>
 
       {/* Bottom: CTA + Date on the left, Mentors spanning bottom */}
-      <div className="relative mt-auto">
+      <div className="relative mt-auto pt-4">
         {/* Gradient glow behind mentors */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
 
