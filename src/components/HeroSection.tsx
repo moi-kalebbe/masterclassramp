@@ -15,7 +15,7 @@ const HeroSection = () => (
     {/* Content */}
     <div className="relative z-10 flex flex-col flex-1">
       {/* Top: Badge + Title + Subtitle */}
-      <div className="flex flex-col items-center text-center pt-10 sm:pt-12 px-6">
+      <div className="flex flex-col items-center text-center pt-10 sm:pt-12 px-4 sm:px-6">
         {/* Badge */}
         <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
           Vagas Limitadas • Masterclass Exclusiva
@@ -40,19 +40,19 @@ const HeroSection = () => (
         {/* Gradient glow behind mentors */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="container max-w-6xl px-6 relative z-10">
-          <div className="flex flex-col sm:flex-row items-end gap-6">
+          <div className="container max-w-6xl px-4 sm:px-6 relative z-10">
+          <div className="flex flex-col sm:flex-row items-center sm:items-end gap-6">
             {/* Left: CTA + Date */}
-            <div className="flex flex-col items-start gap-4 pb-8 sm:pb-12 lg:pb-16 z-10">
+            <div className="flex flex-col items-center sm:items-start gap-4 pb-4 sm:pb-12 lg:pb-16 z-10 w-full sm:w-auto">
               <CtaButton />
-              <div className="flex items-center gap-3 text-foreground font-semibold text-sm sm:text-base tracking-wide">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
+              <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-3 text-foreground font-semibold text-sm sm:text-base tracking-wide w-full">
+                <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
                   <CalendarDays className="w-4 h-4 text-primary" /> 09/04
                 </span>
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
+                <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
                   <Clock className="w-4 h-4 text-primary" /> 19H
                 </span>
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
+                <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
                   <Monitor className="w-4 h-4 text-primary" /> Online
                 </span>
               </div>
