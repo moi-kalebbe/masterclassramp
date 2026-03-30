@@ -24,9 +24,12 @@ const logos = [
 
 const LogosCarouselSection = () => (
   <section className="py-16 sm:py-20 overflow-hidden">
-    <div className="container max-w-4xl px-6 mb-10 text-center">
+    <div className="container max-w-4xl px-6 mb-12 text-center">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground mb-2 uppercase tracking-tight">
+        Métodos aplicados em <span className="text-primary">diversas empresas</span>
+      </h2>
       <p className="text-sm sm:text-base text-muted-foreground tracking-wide">
-        Métodos aplicados em diversas empresas como...
+        como...
       </p>
     </div>
 
@@ -39,12 +42,12 @@ const LogosCarouselSection = () => (
         {[...logos, ...logos].map((logo, i) => (
           <div
             key={i}
-            className="flex-shrink-0 px-6 sm:px-10 flex items-center justify-center min-w-[120px]"
+            className="flex-shrink-0 px-8 sm:px-12 flex items-center justify-center min-w-[160px]"
           >
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-10 sm:h-12 w-auto opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+              className="h-16 sm:h-20 w-auto opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
               loading="lazy"
             />
           </div>
