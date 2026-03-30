@@ -29,7 +29,7 @@ const HeroSection = () => (
         </h1>
 
         {/* Subheadline */}
-        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+        <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
           Como Estruturar Gestão e Finanças para Escalar sua empresa
           com previsibilidade e lucro real.
         </p>
