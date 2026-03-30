@@ -1,55 +1,49 @@
-import rebecaImg from "@/assets/rebeca_maia.webp";
-import lucasImg from "@/assets/lucas.webp";
+import rebecaImg from "@/assets/rebeca-bio.png";
+import lucasImg from "@/assets/lucas-bio.png";
+
+const mentors = [
+  {
+    img: rebecaImg,
+    name: "Rebeca Maia",
+    bio: "Conselheira consultiva e mentora de empresários com mais de uma década dedicada à aceleração de negócios através da gestão estratégica. Especialista em conduzir a transição de empresas dependentes de seus fundadores para organizações de alta performance e autonomia operacional. Com vasta experiência em operações familiares e governança, Rebeca desenha processos que eliminam gargalos de produtividade, permitindo que o empresário se desvincule do operacional para focar na expansão e na visão de longo prazo do seu negócio.",
+  },
+  {
+    img: lucasImg,
+    name: "Lucas Nigro",
+    bio: "Especialista em inteligência financeira de alta complexidade e engenharia de indicadores de performance. Lucas foca na estruturação financeira como pilar de escala, ajudando empresários a identificarem a margem de lucro real e a blindarem o caixa contra decisões intuitivas. Através de metodologias que transformam dados brutos em previsibilidade matemática, ele capacita fundadores a liderarem com segurança financeira, garantindo que o crescimento do faturamento se converta efetivamente em aumento de patrimônio líquido e sustentabilidade do negócio.",
+  },
+];
 
 const MetodosSection = () => (
   <section className="py-16 sm:py-24 px-6">
-    <div className="container max-w-3xl text-center">
-      <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-        Quem são os Mentores
+    <div className="container max-w-5xl">
+      <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-12 text-center">
+        Quem estará com você
       </h2>
-      <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto mb-10 leading-relaxed">
-        Mais de 10 anos desenhando estratégias para grandes holdings e
-        acelerando PMEs com gestão real e inteligência financeira.
-      </p>
 
-      <div className="flex justify-center gap-6 mb-8">
-        <img
-          src={rebecaImg}
-          alt="Rebeca Maia"
-          loading="lazy"
-          decoding="async"
-          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover object-top border-2 border-primary/30"
-        />
-        <img
-          src={lucasImg}
-          alt="Lucas Nigro"
-          loading="lazy"
-          decoding="async"
-          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover object-top border-2 border-primary/30"
-        />
-      </div>
-
-      <div className="text-left space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-        <p>
-          <span className="text-foreground font-semibold">Rebeca Maia</span> é
-          mentora de gestão com mais de uma década transformando empresas
-          dependentes do dono em organizações autônomas. Já atuou em operações
-          familiares e grandes holdings, desenhando processos que libertam o
-          empresário da operação.
-        </p>
-        <p>
-          <span className="text-foreground font-semibold">Lucas Nigro</span> é
-          especialista em gestão financeira de alta complexidade. Ajuda
-          empresários a encontrar o lucro real dentro do próprio negócio e a
-          escalar com segurança, usando indicadores que eliminam decisões no
-          escuro.
-        </p>
-        <p>
-          Juntos, unem <span className="text-foreground font-medium">Arquitetura de Processos</span> e{" "}
-          <span className="text-foreground font-medium">Engenharia de Caixa</span> num
-          plano integrado para empresários que já faturam, mas ainda não
-          lucraram de verdade.
-        </p>
+      <div className="flex flex-col gap-10">
+        {mentors.map((m, i) => (
+          <div
+            key={m.name}
+            className={`flex flex-col ${i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"} items-center gap-6 sm:gap-10 border border-border rounded-2xl p-6 sm:p-8 bg-card/40`}
+          >
+            <img
+              src={m.img}
+              alt={m.name}
+              loading="lazy"
+              decoding="async"
+              className="w-40 h-48 sm:w-48 sm:h-56 rounded-xl object-cover object-top flex-shrink-0 border-2 border-primary/20"
+            />
+            <div>
+              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3">
+                {m.name}
+              </h3>
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                {m.bio}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
