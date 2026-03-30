@@ -10,6 +10,7 @@ const Index = () => (
   <main className="bg-background min-h-screen">
     <HeroSection />
     <ProblemaSection />
+    <LogosCarouselSection />
     <SolucaoSection />
     <MetodosSection />
 
