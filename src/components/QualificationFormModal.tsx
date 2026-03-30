@@ -218,35 +218,63 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
   if (result === "qualified") {
     return (
       <Dialog open={open} onOpenChange={handleClose}>
-        <DialogContent className="max-w-md w-[92vw] rounded-2xl border-border/30 bg-card/95 backdrop-blur-xl p-0 shadow-[0_0_80px_hsl(var(--primary)/0.08)] overflow-hidden">
-          <DialogTitle className="sr-only">Convite Aprovado</DialogTitle>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative text-center px-8 py-10 space-y-6">
+        <DialogContent className="max-w-lg w-[95vw] rounded-2xl border-border/30 bg-card/95 backdrop-blur-xl p-0 shadow-[0_0_80px_hsl(var(--primary)/0.08)] overflow-hidden">
+          <DialogTitle className="sr-only">Aplicação Aprovada</DialogTitle>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative px-8 py-10 space-y-6">
+            {/* Icon */}
             <div className="mx-auto w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
               <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <div>
-              <h3 className="text-2xl font-black text-foreground mb-1">Parabéns!</h3>
-              <p className="text-lg font-bold text-foreground">Seu perfil foi aprovado.</p>
+
+            {/* Headline */}
+            <div className="text-center space-y-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-primary">Aplicação Aprovada</p>
+              <h3 className="text-xl sm:text-2xl font-black text-foreground leading-tight">
+                Seja bem-vindo à Mesa de Estratégia.
+              </h3>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
-              Você tem o perfil ideal para essa masterclass. Entre no grupo
-              exclusivo do WhatsApp para receber todas as informações.
+
+            {/* Subheadline */}
+            <p className="text-sm text-muted-foreground leading-relaxed text-center">
+              Analisamos os dados da sua operação e confirmamos que seu momento de negócio está alinhado com a metodologia da Masterclass. Você acaba de garantir seu lugar entre um grupo seleto de empresários focados em escala e alta performance.
             </p>
+
             <div className="w-12 h-0.5 bg-border/50 mx-auto rounded-full" />
+
+            {/* Corpo */}
+            <p className="text-sm text-muted-foreground leading-relaxed text-center">
+              Para garantir que você receba todos os materiais prévios, o link da transmissão e as ferramentas de análise que utilizaremos ao vivo, você precisa entrar agora no nosso <span className="text-foreground font-semibold">Grupo VIP de Acesso</span>.
+            </p>
+
+            {/* O que acontece */}
+            <div className="rounded-xl border border-border/40 bg-background/40 p-4 space-y-2">
+              <p className="text-xs font-bold uppercase tracking-wider text-foreground">O que acontece lá dentro</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Entrega de materiais complementares, avisos importantes e o link exclusivo para a Masterclass.
+              </p>
+            </div>
+
+            {/* Privacidade */}
+            <p className="text-xs text-muted-foreground/70 text-center italic">
+              🔒 O grupo é silencioso e focado exclusivamente na sua preparação para o evento.
+            </p>
+
+            {/* CTA */}
             <a
-              href="#LINK_WHATSAPP"
+              href="https://chat.whatsapp.com/KnqQEFMNzdtIFjuKMQdzmM?mode=gi_t"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-sm transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 w-full px-6 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-sm uppercase tracking-wide transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] active:scale-[0.98]"
             >
-              Entrar no Grupo do WhatsApp
+              Acessar Grupo VIP no WhatsApp
             </a>
+
             <button
               onClick={handleClose}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="block mx-auto text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Fechar
             </button>
