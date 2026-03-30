@@ -1,36 +1,45 @@
+import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
-import ProblemaSection from "@/components/ProblemaSection";
-import LogosCarouselSection from "@/components/LogosCarouselSection";
-import SolucaoSection from "@/components/SolucaoSection";
-import MetodosSection from "@/components/MetodosSection";
-import ParaVoceSection from "@/components/ParaVoceSection";
-import CtaButton from "@/components/CtaButton";
+import QualificationFormModal from "@/components/QualificationFormModal";
 import logoFooter from "@/assets/logo-footer.png";
 
+const ProblemaSection = lazy(() => import("@/components/ProblemaSection"));
+const LogosCarouselSection = lazy(() => import("@/components/LogosCarouselSection"));
+const SolucaoSection = lazy(() => import("@/components/SolucaoSection"));
+const MetodosSection = lazy(() => import("@/components/MetodosSection"));
+const ParaVoceSection = lazy(() => import("@/components/ParaVoceSection"));
 
-const Index = () => (
-  <main className="bg-background min-h-screen">
-    <HeroSection />
-    <ProblemaSection />
-    <LogosCarouselSection />
-    <SolucaoSection />
-    <MetodosSection />
-    <ParaVoceSection />
+const Index = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
 
+  return (
+    <main className="bg-background min-h-screen">
+      <HeroSection onCtaClick={openModal} />
+      <Suspense fallback={null}>
+        <ProblemaSection onCtaClick={openModal} />
+        <LogosCarouselSection />
+        <SolucaoSection />
+        <MetodosSection onCtaClick={openModal} />
+        <ParaVoceSection onCtaClick={openModal} />
+      </Suspense>
 
-    <footer className="py-10 px-6 border-t border-border/30 flex flex-col items-center gap-6">
-      <img src={logoFooter} alt="Rumo à Máxima Potência" className="h-10 w-auto" />
-      <div className="flex items-center gap-4 text-xs text-muted-foreground/60">
-        <Link to="/termos-de-uso" className="hover:text-primary transition underline underline-offset-2">Termos de Uso</Link>
-        <span>•</span>
-        <Link to="/politica-de-privacidade" className="hover:text-primary transition underline underline-offset-2">Política de Privacidade</Link>
-      </div>
-      <p className="text-center text-xs text-muted-foreground/60">
-        © {new Date().getFullYear()} Masterclass. Todos os direitos reservados.
-      </p>
-    </footer>
-  </main>
-);
+      <footer className="py-10 px-6 border-t border-border/30 flex flex-col items-center gap-6">
+        <img src={logoFooter} alt="Rumo à Máxima Potência" className="h-10 w-auto" width={160} height={40} />
+        <div className="flex items-center gap-4 text-xs text-muted-foreground/60">
+          <Link to="/termos-de-uso" className="hover:text-primary transition underline underline-offset-2">Termos de Uso</Link>
+          <span>•</span>
+          <Link to="/politica-de-privacidade" className="hover:text-primary transition underline underline-offset-2">Política de Privacidade</Link>
+        </div>
+        <p className="text-center text-xs text-muted-foreground/60">
+          © {new Date().getFullYear()} Masterclass. Todos os direitos reservados.
+        </p>
+      </footer>
+
+      <QualificationFormModal open={modalOpen} onOpenChange={setModalOpen} />
+    </main>
+  );
+};
 
 export default Index;

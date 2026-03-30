@@ -19,7 +19,11 @@ const naoParaVoce = [
   "Você não tem interesse em profissionalizar a gestão e quer crescer a qualquer custo",
 ];
 
-const ParaVoceSection = () => (
+interface ParaVoceSectionProps {
+  onCtaClick?: () => void;
+}
+
+const ParaVoceSection = ({ onCtaClick }: ParaVoceSectionProps) => (
   <section className="relative py-20 sm:py-28 px-6 overflow-hidden">
     <div className="absolute inset-0 bg-card/30" />
 
@@ -35,7 +39,6 @@ const ParaVoceSection = () => (
       </p>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* É para você */}
         <div className="rounded-2xl border border-border/50 bg-background/60 backdrop-blur-sm p-6 sm:p-8">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-6">
             <CheckCircle2 className="w-3.5 h-3.5" /> É para você se...
@@ -50,7 +53,6 @@ const ParaVoceSection = () => (
           </ul>
         </div>
 
-        {/* Não é para você */}
         <div className="rounded-2xl border border-border/50 bg-background/60 backdrop-blur-sm p-6 sm:p-8">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-muted-foreground/30 bg-muted/20 text-muted-foreground text-xs font-semibold uppercase tracking-wider mb-6">
             <XCircle className="w-3.5 h-3.5" /> Não é para você se...
@@ -70,7 +72,7 @@ const ParaVoceSection = () => (
         <p className="text-muted-foreground text-sm sm:text-base mb-6">
           Se você se identificou com o lado esquerdo, esta masterclass foi feita para você.
         </p>
-        <CtaButton />
+        <CtaButton onClick={onCtaClick} />
       </div>
     </div>
   </section>
