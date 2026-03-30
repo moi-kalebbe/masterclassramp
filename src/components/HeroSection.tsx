@@ -47,7 +47,7 @@ const HeroSection = () => (
               <CtaButton />
               <div className="flex items-center gap-3 text-foreground font-semibold text-sm sm:text-base tracking-wide">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
-                  <CalendarDays className="w-4 h-4 text-primary" /> 09 de Abril
+                  <CalendarDays className="w-4 h-4 text-primary" /> 09/04
                 </span>
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
                   <Clock className="w-4 h-4 text-primary" /> 19H
