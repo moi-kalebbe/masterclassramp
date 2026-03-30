@@ -1,60 +1,89 @@
+## Painel Admin de Gestão de Leads
+
+### Visão Geral
+
+Criar um painel administrativo completo para monitorar leads capturados pelo formulário de qualificação, com autenticação, armazenamento em banco de dados, disparos de WhatsApp via z-api, e exportação de dados.
+
+### Funcionalidades Sugeridas
+
+Além do que você pediu, sugiro incluir:
+
+1. **Dashboard com métricas**: total de leads, qualificados vs desqualificados, taxa de conversão, leads por ramo, por faixa de faturamento
+2. **Filtros e busca**: por nome, email, ramo, status (qualificado/não qualificado), data de cadastro
+3. **Pipeline de status**: Novo → Contactado → Em negociação → Convertido → Perdido
+4. **Histórico de interações**: registro de cada disparo de WhatsApp feito por lead
+5. **Exportação CSV**: download da tabela filtrada em CSV
+6. **Disparo em massa**: selecionar múltiplos leads e enviar mensagem template para todos
+7. **Templates de mensagem**: mensagens pré-configuradas para diferentes etapas do funil
+
+### Arquitetura Técnica
+
+```text
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│  Landing     │────▶│  Supabase    │◀────│  Admin Panel │
+│  Page (form) │     │  Database    │     │  /admin      │
+└─────────────┘     └──────┬───────┘     └──────┬──────┘
+                           │                     │
+                    ┌──────┴───────┐     ┌──────┴──────┐
+                    │  Supabase    │     │  Edge Func   │
+                    │  Auth        │     │  (Twilio)    │
+                    └──────────────┘     └─────────────┘
+```
+
+### Etapas de Implementação
+
+#### 1. Configurar Supabase (Lovable Cloud)
+
+- Ativar Lovable Cloud para ter banco de dados e autenticação
+- Criar tabela `leads` com os campos do formulário: nome, sobrenome, email, whatsapp, ramo, colaboradores, faturamento, desafios, qualified (boolean), status (pipeline), created_at
+- Criar tabela `message_logs` para registrar disparos: lead_id, template, sent_at, status
+- Habilitar RLS com políticas para admin
+
+#### 2. Conectar formulário ao banco
+
+- Modificar `QualificationFormModal` para salvar o lead no Supabase ao submeter
+- Manter o fluxo visual atual intacto (tela de sucesso/rejeição)
+
+#### 3. Autenticação Admin
+
+- Criar página `/admin/login` com email/senha via Supabase Auth
+- Proteger rota `/admin` com verificação de sessão
+- Criar tabela `user_roles` com role `admin`
+
+#### 4. Painel Admin (`/admin`)
+
+- **Dashboard**: cards com métricas (total leads, qualificados, por ramo)
+- **Tabela de leads**: listagem com busca, filtros, ordenação, paginação
+- **Detalhe do lead**: modal/drawer com dados completos + histórico de mensagens
+- **Ações**: alterar status no pipeline, enviar WhatsApp individual
+- **Seleção em massa**: checkbox para selecionar vários leads e disparar mensagem
+- **Exportar CSV**: botão para baixar dados filtrados
+- **Templates de mensagem**: CRUD simples de templates
+
+#### 5. Integração Z-api (WhatsApp)
+
+- Conectar z-api
+- Conectar com o mesmo z-api do grupo veltz (Veltz CRM)
+- Frontend chama a Edge Function passando número + mensagem
+- Registrar cada envio na tabela `message_logs`
+
+### Arquivos a criar/modificar
 
 
-## Performance Optimization Plan
+| Arquivo                                     | Descrição                                                           |
+| ------------------------------------------- | ------------------------------------------------------------------- |
+| Migração SQL                                | Tabelas `leads`, `message_logs`, `user_roles`, RLS                  |
+| `src/integrations/supabase/`                | Client e tipos gerados                                              |
+| `src/components/QualificationFormModal.tsx` | Salvar lead no Supabase ao submeter                                 |
+| `src/pages/AdminLogin.tsx`                  | Tela de login admin                                                 |
+| `src/pages/Admin.tsx`                       | Dashboard + tabela + ações                                          |
+| `src/components/admin/`                     | LeadsTable, LeadDetail, DashboardCards, MessageTemplates, CsvExport |
+| `supabase/functions/send-whatsapp/`         | Edge Function para disparo via Twilio                               |
+| `src/App.tsx`                               | Novas rotas `/admin`, `/admin/login`                                |
 
-### Current Issues Identified
 
-1. **Heavy image formats**: Hero uses `background.png` and `beca_e_lucas.png` (PNG). Bio images use `.png` files. Logo carousel uses 10 PNG files. WebP versions exist for some images but aren't used.
-2. **No lazy loading on sections below the fold**: All components are eagerly imported and rendered.
-3. **Font loading**: Inter font loads all 6 weights (400-900) but could use `font-display: swap` more explicitly and reduce weights.
-4. **Unused preload**: `index.html` preloads `/images/hero-bg.webp` which doesn't exist (actual path is a Vite-processed asset).
-5. **Each CtaButton instance creates its own QualificationFormModal**: The modal is duplicated in every CTA (appears ~4 times on the page), meaning the heavy Dialog component is mounted multiple times.
-6. **Logo carousel duplicates all images** in DOM for infinite scroll effect (20 img tags for 10 logos).
-7. **No `will-change` or `contain` hints** on animated elements (carousel).
+### Pré-requisitos
 
-### Optimization Plan
-
-#### 1. Use WebP images where available
-- `HeroSection`: switch `beca_e_lucas.png` → use WebP version or convert
-- `MetodosSection`: `rebeca-bio.png` and `lucas-bio.png` → keep as-is (no WebP available), but add `fetchpriority="low"`
-- `LogosCarouselSection`: logos are small PNGs, acceptable but add proper `width`/`height` attributes to prevent layout shift
-
-#### 2. Lazy load below-fold sections
-- Use `React.lazy()` + `Suspense` for sections below HeroSection: `ProblemaSection`, `LogosCarouselSection`, `SolucaoSection`, `MetodosSection`, `ParaVoceSection`
-- This splits the bundle and defers loading of non-critical sections
-
-#### 3. Hoist QualificationFormModal to a single instance
-- Move the modal state and component to `Index.tsx` (or a context)
-- Pass `openModal` callback down to each `CtaButton` instead of each button owning its own modal
-- Reduces DOM nodes and JS from ~4 modal instances to 1
-
-#### 4. Fix index.html
-- Remove the broken preload for `/images/hero-bg.webp`
-- Add `fetchpriority="high"` to the hero background image
-- Reduce font weights to only those used: 400, 600, 700, 800, 900 (check if 500 is actually used)
-
-#### 5. Optimize carousel animation
-- Add `will-change: transform` to the scrolling container
-- Add `contain: layout style paint` to prevent repaints from affecting the rest of the page
-- Add explicit `width`/`height` on logo images to prevent CLS
-
-#### 6. Add image dimensions
-- Add `width` and `height` attributes to all `<img>` tags to prevent Cumulative Layout Shift (CLS)
-
-### Files to modify
-
-| File | Change |
-|---|---|
-| `src/pages/Index.tsx` | Lazy-load sections, hoist modal to single instance |
-| `src/components/CtaButton.tsx` | Accept `onClick` prop instead of managing own modal |
-| `src/components/HeroSection.tsx` | Use WebP for mentor image, remove broken preload ref |
-| `src/components/LogosCarouselSection.tsx` | Add `will-change`, `contain`, image dimensions |
-| `src/components/MetodosSection.tsx` | Add image dimensions |
-| `index.html` | Remove broken preload, optimize font request |
-| `src/index.css` | Add `contain` utility if needed |
-
-### What stays the same
-- All visual design, colors, typography, layout, and spacing
-- All content and copy
-- All interactions and form behavior
-
+- Ativar Lovable Cloud (banco + auth)
+- Conectar Z-api (para disparos de WhatsApp)
+- Criar conta admin no Supabase Auth
