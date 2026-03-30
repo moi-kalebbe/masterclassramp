@@ -24,13 +24,13 @@ const ParaVoceSection = () => (
     <div className="absolute inset-0 bg-card/30" />
 
     <div className="relative container max-w-5xl">
-      <span className="text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-3 block">
+      <span className="text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-3 block text-center">
         Antes de se inscrever
       </span>
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground mb-3 uppercase tracking-tight">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground mb-3 uppercase tracking-tight text-center">
         Esta masterclass é <span className="text-primary">para você?</span>
       </h2>
-      <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mb-12 leading-relaxed">
+      <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto mb-12 leading-relaxed text-center">
         Ela foi desenhada para um perfil muito específico de empresário. Veja se você se encaixa.
       </p>
 
