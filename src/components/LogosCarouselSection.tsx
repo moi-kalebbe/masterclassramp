@@ -48,11 +48,9 @@ const LogosCarouselSection = () => (
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-44 sm:h-52 w-auto opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+              className="h-44 sm:h-52 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
               loading="lazy"
               decoding="async"
-              width={180}
-              height={208}
             />
           </div>
         ))}
