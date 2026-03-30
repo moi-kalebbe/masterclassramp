@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog,
   DialogContent,
@@ -136,10 +137,30 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const disqualified =
       form.colaboradores === "Só eu" || form.faturamento === "Entre 10k e 50k";
-    setResult(disqualified ? "not_qualified" : "qualified");
+    const qualified = !disqualified;
+
+    // Save lead to Supabase
+    try {
+      await supabase.from("leads").insert({
+        nome: form.nome,
+        sobrenome: form.sobrenome,
+        email: form.email,
+        whatsapp: form.whatsapp,
+        ramo: form.ramo,
+        ramo_outro: form.ramo === "Outro" ? form.ramoOutro : null,
+        colaboradores: form.colaboradores,
+        faturamento: form.faturamento,
+        desafios: form.desafios,
+        qualified,
+      });
+    } catch (err) {
+      console.error("Error saving lead:", err);
+    }
+
+    setResult(qualified ? "qualified" : "not_qualified");
   };
 
   const handleClose = () => {
