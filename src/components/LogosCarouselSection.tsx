@@ -43,7 +43,7 @@ const LogosCarouselSection = () => (
           <div
             key={i}
             className="flex-shrink-0 px-10 sm:px-14 flex items-center justify-center"
-            style={{ width: 220 }}
+            style={{ width: 280 }}
           >
             <img
               src={logo.src}
