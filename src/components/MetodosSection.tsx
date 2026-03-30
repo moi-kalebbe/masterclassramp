@@ -3,14 +3,14 @@ import lucasImg from "@/assets/lucas-bio.png";
 
 const mentors = [
   {
-    img: rebecaImg,
-    name: "Rebeca Maia",
-    bio: "Conselheira consultiva e mentora de empresários com mais de uma década dedicada à aceleração de negócios através da gestão estratégica. Especialista em conduzir a transição de empresas dependentes de seus fundadores para organizações de alta performance e autonomia operacional. Com vasta experiência em operações familiares e governança, Rebeca desenha processos que eliminam gargalos de produtividade, permitindo que o empresário se desvincule do operacional para focar na expansão e na visão de longo prazo do seu negócio.",
-  },
-  {
     img: lucasImg,
     name: "Lucas Nigro",
     bio: "Especialista em inteligência financeira de alta complexidade e engenharia de indicadores de performance. Lucas foca na estruturação financeira como pilar de escala, ajudando empresários a identificarem a margem de lucro real e a blindarem o caixa contra decisões intuitivas. Através de metodologias que transformam dados brutos em previsibilidade matemática, ele capacita fundadores a liderarem com segurança financeira, garantindo que o crescimento do faturamento se converta efetivamente em aumento de patrimônio líquido e sustentabilidade do negócio.",
+  },
+  {
+    img: rebecaImg,
+    name: "Rebeca Maia",
+    bio: "Conselheira consultiva e mentora de empresários com mais de uma década dedicada à aceleração de negócios através da gestão estratégica. Especialista em conduzir a transição de empresas dependentes de seus fundadores para organizações de alta performance e autonomia operacional. Com vasta experiência em operações familiares e governança, Rebeca desenha processos que eliminam gargalos de produtividade, permitindo que o empresário se desvincule do operacional para focar na expansão e na visão de longo prazo do seu negócio.",
   },
 ];
 
@@ -35,7 +35,7 @@ const MetodosSection = () => (
               className="w-52 h-64 sm:w-64 sm:h-80 rounded-xl object-cover object-top flex-shrink-0 border-2 border-primary/20"
             />
             <div>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-primary mb-3">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-primary mb-3">
                 {m.name}
               </h3>
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
