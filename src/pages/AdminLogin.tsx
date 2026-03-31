@@ -34,10 +34,9 @@ const AdminLogin = () => {
       setError("Email ou senha inválidos.");
       setSubmitting(false);
     }
-    // Don't navigate here — useEffect handles it after loading resolves
   };
 
-  if (loading) {
+  if (loading && !submitting) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-muted-foreground">Carregando...</p>
