@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, useCallback } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User, Session } from "@supabase/supabase-js";
 
@@ -16,48 +16,77 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [authReady, setAuthReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [roleChecked, setRoleChecked] = useState(false);
 
-  const resolveAuth = useCallback(async (session: Session | null) => {
-    setSession(session);
-    setUser(session?.user ?? null);
-    if (session?.user) {
-      const { data } = await supabase.rpc("has_role", {
-        _user_id: session.user.id,
-        _role: "admin",
-      });
-      setIsAdmin(!!data);
-    } else {
-      setIsAdmin(false);
-    }
-    setLoading(false);
-  }, []);
-
+  // 1. Listener first (synchronous callback — no await inside)
   useEffect(() => {
-    // Get initial session first
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      resolveAuth(session);
-    });
-
-    // Then listen for changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setLoading(true);
-        await resolveAuth(session);
+      (_event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        // Reset role state so it gets re-checked
+        setIsAdmin(false);
+        setRoleChecked(false);
+        setAuthReady(true);
       }
     );
 
+    // Then get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setAuthReady(true);
+    });
+
     return () => subscription.unsubscribe();
-  }, [resolveAuth]);
+  }, []);
+
+  // 2. Separate effect to check admin role (non-blocking)
+  useEffect(() => {
+    if (!authReady) return;
+
+    if (!user) {
+      setIsAdmin(false);
+      setRoleChecked(true);
+      return;
+    }
+
+    let cancelled = false;
+
+    const checkRole = async () => {
+      try {
+        const { data, error } = await supabase.rpc("has_role", {
+          _user_id: user.id,
+          _role: "admin",
+        });
+        if (!cancelled) {
+          setIsAdmin(error ? false : !!data);
+          setRoleChecked(true);
+        }
+      } catch {
+        if (!cancelled) {
+          setIsAdmin(false);
+          setRoleChecked(true);
+        }
+      }
+    };
+
+    checkRole();
+    return () => { cancelled = true; };
+  }, [authReady, user?.id]);
+
+  // loading = true until both auth session AND role check are done
+  const loading = !authReady || !roleChecked;
 
   const signIn = async (email: string, password: string) => {
-    setLoading(true);
+    // Reset states so loading becomes true again
+    setRoleChecked(false);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      setLoading(false);
+      setRoleChecked(true); // no user to check role for
     }
-    // on success, onAuthStateChange will handle resolveAuth
     return { error: error as Error | null };
   };
 

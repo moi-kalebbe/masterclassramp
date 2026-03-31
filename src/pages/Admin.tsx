@@ -37,10 +37,13 @@ const Admin = () => {
 
   const fetchLeads = async () => {
     setLoadingData(true);
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("leads")
       .select("*")
       .order("created_at", { ascending: false });
+    if (error) {
+      toast({ title: "Erro ao carregar leads", description: error.message, variant: "destructive" });
+    }
     setLeads(data || []);
     setLoadingData(false);
   };
@@ -124,7 +127,6 @@ const Admin = () => {
       <div className="max-w-7xl mx-auto p-6 space-y-6">
         <DashboardCards leads={leads} />
 
-        {/* Filters & Actions */}
         <div className="flex flex-wrap gap-3 items-center">
           <input
             value={search}
@@ -159,7 +161,6 @@ const Admin = () => {
           </button>
         </div>
 
-        {/* Bulk actions */}
         {selectedLeads.length > 0 && (
           <div className="flex items-center gap-3 p-4 rounded-xl border border-primary/30 bg-primary/5">
             <span className="text-sm text-foreground font-medium">{selectedLeads.length} selecionado(s)</span>
