@@ -142,22 +142,36 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
       form.colaboradores === "Só eu" || form.faturamento === "Entre 10k e 50k";
     const qualified = !disqualified;
 
-    // Save lead to Supabase
     try {
-      await supabase.from("leads").insert({
+      // Upsert origem
+      await supabase.from("origens").upsert(
+        {
+          nome: "Masterclass RAMP",
+          slug: "masterclass-ramp",
+          url: window.location.href,
+        },
+        { onConflict: "slug" }
+      );
+
+      // Insert lead
+      const { error } = await supabase.from("leads").insert({
         nome: form.nome,
-        sobrenome: form.sobrenome,
+        sobrenome: form.sobrenome || null,
         email: form.email,
         whatsapp: form.whatsapp,
-        ramo: form.ramo,
+        ramo: form.ramo || null,
         ramo_outro: form.ramo === "Outro" ? form.ramoOutro : null,
-        colaboradores: form.colaboradores,
-        faturamento: form.faturamento,
+        colaboradores: form.colaboradores || null,
+        faturamento: form.faturamento || null,
         desafios: form.desafios,
         qualified,
+        origem_slug: "masterclass-ramp",
+        status: "novo",
       });
+
+      if (error) throw error;
     } catch (err) {
-      console.error("Error saving lead:", err);
+      console.error("Erro ao salvar lead:", err);
     }
 
     // GTM event
