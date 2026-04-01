@@ -16,49 +16,52 @@ export type Database = {
     Tables: {
       leads: {
         Row: {
-          colaboradores: string
+          colaboradores: string | null
           created_at: string
           desafios: string[] | null
           email: string
-          faturamento: string
+          faturamento: string | null
           id: string
           nome: string
+          origem_slug: string | null
           qualified: boolean
-          ramo: string
+          ramo: string | null
           ramo_outro: string | null
-          sobrenome: string
+          sobrenome: string | null
           status: Database["public"]["Enums"]["lead_status"]
           updated_at: string
           whatsapp: string
         }
         Insert: {
-          colaboradores: string
+          colaboradores?: string | null
           created_at?: string
           desafios?: string[] | null
           email: string
-          faturamento: string
+          faturamento?: string | null
           id?: string
           nome: string
+          origem_slug?: string | null
           qualified?: boolean
-          ramo: string
+          ramo?: string | null
           ramo_outro?: string | null
-          sobrenome: string
+          sobrenome?: string | null
           status?: Database["public"]["Enums"]["lead_status"]
           updated_at?: string
           whatsapp: string
         }
         Update: {
-          colaboradores?: string
+          colaboradores?: string | null
           created_at?: string
           desafios?: string[] | null
           email?: string
-          faturamento?: string
+          faturamento?: string | null
           id?: string
           nome?: string
+          origem_slug?: string | null
           qualified?: boolean
-          ramo?: string
+          ramo?: string | null
           ramo_outro?: string | null
-          sobrenome?: string
+          sobrenome?: string | null
           status?: Database["public"]["Enums"]["lead_status"]
           updated_at?: string
           whatsapp?: string
@@ -102,6 +105,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      origens: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string
+          slug: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nome: string
+          slug: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string
+          slug?: string
+          url?: string | null
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
