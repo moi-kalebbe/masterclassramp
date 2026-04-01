@@ -1,58 +1,67 @@
 
-## Diagnóstico
-- As rotas `/admin` e `/admin/login` existem.
-- O fallback SPA (`public/_redirects`) já está correto, então isto não parece ser outro problema de 404.
-- A correção anterior de redirecionamento já está no código. O ponto que continua frágil é o fluxo de autenticação em `src/hooks/useAuth.tsx`.
-- Hoje o listener de autenticação usa callback `async` e faz `await` na checagem de role (`rpc("has_role")`) dentro do próprio `onAuthStateChange`. Esse padrão pode travar ou atrasar a finalização do login.
-- Também falta tratar falha da checagem de role de forma explícita, então a tela não diferencia bem “senha inválida”, “sem permissão” e “falha ao validar acesso”.
 
-## Plano de implementação
-1. Refatorar `src/hooks/useAuth.tsx`
-   - Registrar o listener de autenticação antes de `getSession()`.
-   - Tornar o callback do `onAuthStateChange` síncrono.
-   - Mover a checagem de admin para uma etapa separada, fora do callback de autenticação.
-   - Garantir que `loading` sempre finalize, mesmo se a validação de acesso falhar.
-   - Adicionar tratamento de erro/estado de falha da validação de acesso.
+## Reconectar formulário ao Supabase + limpar admin
 
-2. Ajustar `src/pages/AdminLogin.tsx`
-   - Continuar redirecionando só quando a autenticação estiver 100% resolvida e o usuário for admin.
-   - Exibir mensagens diferentes para:
-     - credenciais inválidas
-     - conta sem acesso administrativo
-     - falha temporária ao validar o acesso
-   - Garantir que o botão nunca fique preso em “Entrando...”.
+### Resumo
+Atualizar o formulário de qualificação para gravar leads no Supabase com os campos solicitados, criar tabela `origens` com upsert automático, e remover a área admin.
 
-3. Ajustar `src/pages/Admin.tsx`
-   - Esperar a autenticação e a permissão terminarem antes de redirecionar.
-   - Tratar erro ao carregar leads, para o dashboard não parecer “quebrado” quando o problema for a consulta de dados.
-   - Manter redirecionamento apenas para estado realmente confirmado de “não autenticado” ou “não admin”.
+### 1. Migration SQL
 
-4. Validação final
-   - Testar o fluxo completo em `/admin/login`.
-   - Confirmar: login -> validação de acesso -> abertura de `/admin` -> carregamento do dashboard.
-   - Se o preview funcionar e o domínio final não refletir a correção, republicar a versão atualizada.
-
-## Arquivos previstos
-- `src/hooks/useAuth.tsx`
-- `src/pages/AdminLogin.tsx`
-- `src/pages/Admin.tsx`
-
-## Detalhes técnicos
-```text
-Fluxo atual (instável):
-signIn
--> onAuthStateChange(async)
--> await rpc("has_role") dentro do callback
--> loading/submissão podem ficar presos ou resolver fora de hora
-
-Fluxo proposto:
-onAuthStateChange(sync)
--> atualiza session/user
--> etapa separada valida role admin
--> loading encerra com sucesso ou erro tratado
--> redirect seguro para /admin
+**Criar tabela `origens`:**
+```sql
+CREATE TABLE public.origens (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  nome text NOT NULL,
+  slug text NOT NULL UNIQUE,
+  url text,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+ALTER TABLE public.origens ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Anyone can upsert origens" ON public.origens
+  FOR ALL TO anon, authenticated USING (true) WITH CHECK (true);
 ```
 
-## Observação
-- Não vejo necessidade de mudar a estrutura do banco neste momento.
-- Se, depois da refatoração, a validação continuar retornando acesso negado para a conta admin, aí o ajuste será no registro de permissão existente, não na modelagem.
+**Adicionar `origem_slug` à tabela `leads` e tornar campos extras nullable:**
+```sql
+ALTER TABLE public.leads
+  ADD COLUMN IF NOT EXISTS origem_slug text,
+  ALTER COLUMN sobrenome DROP NOT NULL,
+  ALTER COLUMN ramo DROP NOT NULL,
+  ALTER COLUMN colaboradores DROP NOT NULL,
+  ALTER COLUMN faturamento DROP NOT NULL;
+```
+
+### 2. Atualizar `src/components/QualificationFormModal.tsx`
+
+No `handleSubmit`:
+- Fazer upsert na tabela `origens` com slug `masterclass-ramp`
+- Inserir na tabela `leads` com os campos: nome, sobrenome, email, whatsapp, ramo, ramo_outro, colaboradores, faturamento, desafios, qualified, **origem_slug** (`"masterclass-ramp"`), status (`"novo"`)
+- Tratar erro com toast amigável + `console.error`
+- Manter o comportamento visual existente (tela de sucesso/reprovação)
+
+### 3. Remover área admin
+
+**Arquivos a deletar:**
+- `src/pages/Admin.tsx`
+- `src/pages/AdminLogin.tsx`
+- `src/hooks/useAuth.tsx`
+- `src/components/admin/CsvExport.tsx`
+- `src/components/admin/DashboardCards.tsx`
+- `src/components/admin/LeadDetail.tsx`
+- `src/components/admin/LeadsTable.tsx`
+
+**Atualizar `src/App.tsx`:**
+- Remover rotas `/admin` e `/admin/login`
+- Remover imports de Admin, AdminLogin, AuthProvider
+
+### Arquivos alterados
+| Arquivo | Ação |
+|---|---|
+| Migration SQL | Criar tabela `origens` + adicionar `origem_slug` a `leads` |
+| `src/components/QualificationFormModal.tsx` | Upsert origens + insert lead com novos campos |
+| `src/App.tsx` | Remover rotas admin e AuthProvider |
+| `src/pages/Admin.tsx` | Deletar |
+| `src/pages/AdminLogin.tsx` | Deletar |
+| `src/hooks/useAuth.tsx` | Deletar |
+| `src/components/admin/*` | Deletar (4 arquivos) |
+
