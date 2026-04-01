@@ -143,8 +143,8 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
     const qualified = !disqualified;
 
     try {
-      // Upsert origem
-      await supabase.from("origens").upsert(
+      // Upsert origem no Supabase externo (LeadFlow)
+      await externalSupabase.from("origens").upsert(
         {
           nome: "Masterclass RAMP",
           slug: "masterclass-ramp",
@@ -153,20 +153,22 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
         { onConflict: "slug" }
       );
 
-      // Insert lead
-      const { error } = await supabase.from("leads").insert({
+      // Buscar UUID da origem
+      const { data: origemData } = await externalSupabase
+        .from("origens")
+        .select("id")
+        .eq("slug", "masterclass-ramp")
+        .single();
+
+      // Insert lead no Supabase externo (LeadFlow)
+      const { error } = await externalSupabase.from("leads").insert({
         nome: form.nome,
-        sobrenome: form.sobrenome || null,
         email: form.email,
         whatsapp: form.whatsapp,
-        ramo: form.ramo || null,
-        ramo_outro: form.ramo === "Outro" ? form.ramoOutro : null,
-        colaboradores: form.colaboradores || null,
-        faturamento: form.faturamento || null,
-        desafios: form.desafios,
-        qualified,
+        origem: origemData?.id || null,
         origem_slug: "masterclass-ramp",
         status: "novo",
+        empresa_id: "9701b451-f783-4474-8ba8-9a85b2a54657",
       });
 
       if (error) throw error;
