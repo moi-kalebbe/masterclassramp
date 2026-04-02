@@ -50,7 +50,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
                   <CalendarDays className="w-4 h-4 text-primary" /> 09/04
                 </span>
                 <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
-                  <Clock className="w-4 h-4 text-primary" /> 19H
+                  <Clock className="w-4 h-4 text-primary" /> 19H.
                 </span>
                 <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg border border-primary/20 bg-primary/5 backdrop-blur-sm">
                   <Monitor className="w-4 h-4 text-primary" /> Online
