@@ -23,7 +23,7 @@ const logos = [
 ];
 
 const LogosCarouselSection = () => (
-  <section className="py-16 sm:py-20 overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "640px" }}>
+  <section className="py-16 sm:py-20 overflow-hidden">
     <div className="container max-w-4xl px-6 mb-12 text-center">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground uppercase tracking-tight">
         Métodos aplicados em <span className="text-primary">diversas empresas</span>
@@ -33,12 +33,15 @@ const LogosCarouselSection = () => (
       </p>
     </div>
 
-    <div className="relative" style={{ contain: "layout style paint" }}>
+    <div className="relative">
       {/* Fade edges */}
       <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <div className="flex w-max animate-logos-scroll items-center" style={{ willChange: "transform", contain: "layout style" }}>
+      <div
+        className="flex w-max animate-logos-scroll items-center"
+        style={{ willChange: "transform", transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
+      >
         {[...logos, ...logos].map((logo, i) => (
           <div
             key={i}
@@ -48,11 +51,12 @@ const LogosCarouselSection = () => (
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-44 sm:h-52 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
-              loading="lazy"
+              className="block h-44 sm:h-52 w-auto object-contain opacity-70"
+              loading="eager"
               decoding="async"
               width={200}
               height={208}
+              style={{ backfaceVisibility: "hidden" }}
             />
           </div>
         ))}
