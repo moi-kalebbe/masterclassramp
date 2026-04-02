@@ -82,3 +82,24 @@
     box-shadow: 0 0 30px hsl(160 90% 55% / 0.5), 0 4px 30px hsl(160 90% 55% / 0.3);
   }
 }
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Disable heavy animations on mobile for performance */
+@media (max-width: 767px) {
+  .animate-pulse-glow {
+    animation: none !important;
+    box-shadow: 0 0 20px hsl(160 90% 55% / 0.3) !important;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

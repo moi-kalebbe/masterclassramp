@@ -40,6 +40,7 @@ const MetodosSection = ({ onCtaClick }: MetodosSectionProps) => (
               className="w-52 h-64 sm:w-64 sm:h-80 rounded-xl object-cover object-top flex-shrink-0 border-2 border-primary/20"
               width={256}
               height={320}
+              fetchPriority="low"
             />
             <div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-primary mb-3">

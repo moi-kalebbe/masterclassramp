@@ -24,7 +24,7 @@ interface ParaVoceSectionProps {
 }
 
 const ParaVoceSection = ({ onCtaClick }: ParaVoceSectionProps) => (
-  <section className="relative py-20 sm:py-28 px-6 overflow-hidden">
+  <section className="relative py-20 sm:py-28 px-6 overflow-hidden" style={{ contain: "layout style paint" }}>
     <div className="absolute inset-0 bg-card/30" />
 
     <div className="relative container max-w-5xl">
