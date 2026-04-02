@@ -84,9 +84,9 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(123 96% 53% / 0.3)" },
           "50%": { boxShadow: "0 0 40px hsl(123 96% 53% / 0.5)" },
         },
-        "logos-scroll": {
+        "logos-drift": {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(-42%)" },
         },
       },
       animation: {
@@ -94,7 +94,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.7s ease-out forwards",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "logos-scroll": "logos-scroll 30s linear infinite",
+        "logos-drift": "logos-drift 28s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards",
       },
     },
   },

@@ -39,12 +39,12 @@ const LogosCarouselSection = () => (
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       <div
-        className="flex w-max animate-logos-scroll items-center"
+        className="flex w-max animate-logos-drift items-center motion-reduce:animate-none"
         style={{ willChange: "transform", transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
       >
-        {[...logos, ...logos].map((logo, i) => (
+        {logos.map((logo) => (
           <div
-            key={i}
+            key={logo.alt}
             className="flex-shrink-0 px-10 sm:px-14 flex items-center justify-center"
             style={{ width: 280 }}
           >

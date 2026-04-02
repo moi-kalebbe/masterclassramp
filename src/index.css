@@ -92,6 +92,11 @@ html, body {
     animation: none !important;
     box-shadow: 0 0 20px hsl(160 90% 55% / 0.3) !important;
   }
+
+  .animate-logos-drift {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* Reduce motion for users who prefer it */
