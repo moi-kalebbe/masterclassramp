@@ -1,0 +1,22 @@
+services:
+  masterclassramp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: masterclassramp:latest
+    container_name: masterclassramp
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+      - VITE_SUPABASE_PUBLISHABLE_KEY=${VITE_SUPABASE_PUBLISHABLE_KEY}
+      - VITE_SUPABASE_PROJECT_ID=${VITE_SUPABASE_PROJECT_ID}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "com.docker.compose.project=masterclassramp"

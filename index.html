@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Google Fonts — async load to avoid render blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -11,28 +18,31 @@
 
     <title>Masterclass: Da Operação Caótica ao Comando Estratégico</title>
     <meta name="description" content="O plano de intervenção para empresários que precisam profissionalizar a gestão e o lucro para sustentar a próxima escala.">
-    <meta name="author" content="Lovable" />
+    <meta name="author" content="Masterclass RMP" />
+    <meta name="theme-color" content="#0a1520" />
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="Masterclass: Da Operação Caótica ao Comando Estratégico">
+    <meta property="og:description" content="O plano de intervenção para empresários que precisam profissionalizar a gestão e o lucro para sustentar a próxima escala.">
     <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ab65a182-4f8d-45fa-a716-314adea47a64/id-preview-4beef42c--3182aa0b-8b2b-408f-9fb6-64272249ab0b.lovable.app-1772135088027.png">
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ab65a182-4f8d-45fa-a716-314adea47a64/id-preview-4beef42c--3182aa0b-8b2b-408f-9fb6-64272249ab0b.lovable.app-1772135088027.png">
-    <meta property="og:title" content="Masterclass: Da Operação Caótica ao Comando Estratégico">
     <meta name="twitter:title" content="Masterclass: Da Operação Caótica ao Comando Estratégico">
-    <meta property="og:description" content="O plano de intervenção para empresários que precisam profissionalizar a gestão e o lucro para sustentar a próxima escala.">
     <meta name="twitter:description" content="O plano de intervenção para empresários que precisam profissionalizar a gestão e o lucro para sustentar a próxima escala.">
+    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ab65a182-4f8d-45fa-a716-314adea47a64/id-preview-4beef42c--3182aa0b-8b2b-408f-9fb6-64272249ab0b.lovable.app-1772135088027.png">
   </head>
 
   <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M782P9XV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Google Tag Manager — loaded after main content to avoid blocking FCP -->
+    <!-- Google Tag Manager — deferred to avoid blocking FCP/LCP -->
     <script defer>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

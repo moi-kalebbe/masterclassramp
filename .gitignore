@@ -1,3 +1,8 @@
+# Environment variables — NUNCA commitar o .env real
+.env
+.env.local
+.env.*.local
+
 # Logs
 logs
 *.log
