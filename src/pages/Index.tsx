@@ -1,7 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
-import QualificationFormModal from "@/components/QualificationFormModal";
 import logoFooter from "@/assets/logo-footer.webp";
 
 const ProblemaSection = lazy(() => import("@/components/ProblemaSection"));
@@ -9,6 +8,7 @@ const LogosCarouselSection = lazy(() => import("@/components/LogosCarouselSectio
 const SolucaoSection = lazy(() => import("@/components/SolucaoSection"));
 const MetodosSection = lazy(() => import("@/components/MetodosSection"));
 const ParaVoceSection = lazy(() => import("@/components/ParaVoceSection"));
+const QualificationFormModal = lazy(() => import("@/components/QualificationFormModal"));
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -37,7 +37,11 @@ const Index = () => {
         </p>
       </footer>
 
-      <QualificationFormModal open={modalOpen} onOpenChange={setModalOpen} />
+      {modalOpen ? (
+        <Suspense fallback={null}>
+          <QualificationFormModal open={modalOpen} onOpenChange={setModalOpen} />
+        </Suspense>
+      ) : null}
     </main>
   );
 };

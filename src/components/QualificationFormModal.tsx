@@ -7,6 +7,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+  }
+}
+
 interface QualificationFormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -77,6 +83,11 @@ const initial: FormState = {
 type Result = "qualified" | "not_qualified" | null;
 
 const TOTAL_STEPS = 4;
+
+const pushDataLayerEvent = (event: string, payload?: Record<string, unknown>) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event, ...payload });
+};
 
 const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalProps) => {
   const [form, setForm] = useState<FormState>(initial);
@@ -159,8 +170,7 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
     }
 
     // GTM event
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({ event: 'form_submitted', qualified });
+    pushDataLayerEvent("form_submitted", { qualified });
 
     setResult(qualified ? "qualified" : "not_qualified");
   };
@@ -271,8 +281,7 @@ const QualificationFormModal = ({ open, onOpenChange }: QualificationFormModalPr
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                (window as any).dataLayer = (window as any).dataLayer || [];
-                (window as any).dataLayer.push({ event: 'whatsapp_group_click' });
+                pushDataLayerEvent("whatsapp_group_click");
               }}
               className="flex items-center justify-center gap-2 w-full px-6 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-sm uppercase tracking-wide transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] active:scale-[0.98]"
             >

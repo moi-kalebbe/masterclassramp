@@ -1,73 +1,67 @@
-# Welcome to your Lovable project
+# masterclassramp
 
-## Project info
+Landing page em React + Vite para a masterclass da Rumo a Maxima Potencia.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Desenvolvimento local
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Para build local:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+## Variaveis de ambiente
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Crie um `.env` local a partir de `.env.example`.
 
-## What technologies are used for this project?
+As variaveis `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` e `VITE_SUPABASE_PROJECT_ID`
+precisam existir no momento do build. Em deploy Docker, elas entram via `--build-arg`.
 
-This project is built with:
+## Docker
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Build local:
 
-## How can I deploy this project?
+```bash
+docker build \
+  --build-arg VITE_SUPABASE_URL=... \
+  --build-arg VITE_SUPABASE_PUBLISHABLE_KEY=... \
+  --build-arg VITE_SUPABASE_PROJECT_ID=... \
+  -t masterclassramp:local .
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Executar localmente:
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+docker run --rm -p 3000:80 masterclassramp:local
+```
 
-Yes, you can!
+Healthcheck:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+curl http://localhost:3000/healthz
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## GHCR + Portainer
+
+O fluxo oficial de deploy usa GitHub Container Registry.
+
+1. Configure os secrets do repositorio:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_PUBLISHABLE_KEY`
+   - `VITE_SUPABASE_PROJECT_ID`
+2. Faça push na `main`.
+3. O workflow `.github/workflows/docker-publish.yml` publica a imagem em `ghcr.io/moi-kalebbe/masterclassramp`.
+4. No Portainer, use o `docker-compose.yml` deste repositorio e defina, se quiser, `MASTERCLASSRAMP_IMAGE=ghcr.io/moi-kalebbe/masterclassramp:<tag>`.
+5. Valide primeiro em `http://IP:3000`.
+
+## Observacoes de performance
+
+- As imagens legadas pesadas foram removidas do repositório.
+- O modal principal agora carrega sob demanda.
+- Fonts externas do Google foram removidas para evitar bloqueio de render.
+- O bundle inicial foi reduzido com limpeza de dependencias e componentes mortos.

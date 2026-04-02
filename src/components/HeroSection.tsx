@@ -15,7 +15,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
       alt=""
       aria-hidden="true"
       className="absolute inset-0 w-full h-full object-cover object-center"
-      fetchPriority="high"
+      fetchPriority="low"
       decoding="async"
       width={1200}
       height={800}
@@ -73,6 +73,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
                 loading="eager"
                 decoding="async"
                 fetchPriority="high"
+                sizes="(max-width: 640px) 380px, (max-width: 768px) 480px, (max-width: 1024px) 560px, 660px"
                 width={660}
                 height={600}
               />

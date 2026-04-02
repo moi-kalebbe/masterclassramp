@@ -1,17 +1,11 @@
 services:
   masterclassramp:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: masterclassramp:latest
+    image: ${MASTERCLASSRAMP_IMAGE:-ghcr.io/moi-kalebbe/masterclassramp:latest}
+    pull_policy: always
     container_name: masterclassramp
     restart: unless-stopped
     ports:
       - "3000:80"
-    environment:
-      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
-      - VITE_SUPABASE_PUBLISHABLE_KEY=${VITE_SUPABASE_PUBLISHABLE_KEY}
-      - VITE_SUPABASE_PROJECT_ID=${VITE_SUPABASE_PROJECT_ID}
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost/healthz"]
       interval: 30s

@@ -23,7 +23,7 @@ const logos = [
 ];
 
 const LogosCarouselSection = () => (
-  <section className="py-16 sm:py-20 overflow-hidden">
+  <section className="py-16 sm:py-20 overflow-hidden" style={{ contentVisibility: "auto", containIntrinsicSize: "640px" }}>
     <div className="container max-w-4xl px-6 mb-12 text-center">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground uppercase tracking-tight">
         Métodos aplicados em <span className="text-primary">diversas empresas</span>

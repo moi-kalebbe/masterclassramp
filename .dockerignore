@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.github
+.vscode
+.idea
+.lovable
+npm-debug.log*
+.env
+.env.local
+.env.*.local

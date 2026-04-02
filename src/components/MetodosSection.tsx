@@ -20,7 +20,7 @@ interface MetodosSectionProps {
 }
 
 const MetodosSection = ({ onCtaClick }: MetodosSectionProps) => (
-  <section className="py-16 sm:py-24 px-6" style={{ contain: "layout style paint" }}>
+  <section className="py-16 sm:py-24 px-6" style={{ contain: "layout style paint", contentVisibility: "auto", containIntrinsicSize: "1200px" }}>
     <div className="container max-w-5xl">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground mb-12 text-center uppercase tracking-tight">
         Quem estará <span className="text-primary">com você</span>
