@@ -86,7 +86,7 @@ export default {
         },
         "logos-drift": {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-42%)" },
+          "100%": { transform: "translateX(-50%)" },
         },
       },
       animation: {
@@ -94,7 +94,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.7s ease-out forwards",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "logos-drift": "logos-drift 28s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards",
+        "logos-drift": "logos-drift 24s linear infinite",
       },
     },
   },

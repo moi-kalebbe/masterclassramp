@@ -1,4 +1,5 @@
 import mentorsImg from "@/assets/beca_e_lucas.webp";
+import mentorsImgMobile from "@/assets/beca_e_lucas-hero.webp";
 import bgImg from "@/assets/background.webp";
 import { CalendarDays, Clock, Monitor } from "lucide-react";
 import CtaButton from "./CtaButton";
@@ -44,13 +45,6 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
 
       {/* Bottom: CTA + Date on the left, Mentors spanning bottom */}
       <div className="relative pt-1">
-        <div
-          className="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none"
-          aria-hidden="true"
-        >
-          <div className="h-[220px] w-[420px] rounded-full bg-primary/10 blur-[100px] sm:h-[280px] sm:w-[520px]" />
-        </div>
-
         <div className="container max-w-6xl px-4 sm:px-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-center sm:items-end gap-6">
             {/* Left: CTA + Date */}
@@ -72,7 +66,8 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
             {/* Right: Mentors image */}
             <div className="flex-1 flex justify-center sm:justify-end">
               <img
-                src={mentorsImg}
+                src={mentorsImgMobile}
+                srcSet={`${mentorsImgMobile} 800w, ${mentorsImg} 1200w`}
                 alt="Rebeca Maia e Lucas Nigro - Mentores da Masterclass"
                 className="w-[380px] sm:w-[480px] md:w-[560px] lg:w-[660px] h-auto drop-shadow-[0_0_60px_hsl(var(--primary)/0.15)]"
                 loading="eager"

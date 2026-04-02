@@ -1,5 +1,5 @@
-import rebecaImg from "@/assets/rebeca-bio.webp";
-import lucasImg from "@/assets/lucas-bio.webp";
+import rebecaImg from "@/assets/rebeca-bio-card.webp";
+import lucasImg from "@/assets/lucas-bio-card.webp";
 import CtaButton from "./CtaButton";
 
 const mentors = [
@@ -41,6 +41,7 @@ const MetodosSection = ({ onCtaClick }: MetodosSectionProps) => (
               width={256}
               height={320}
               fetchPriority="low"
+              sizes="(max-width: 640px) 208px, 256px"
             />
             <div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-primary mb-3">

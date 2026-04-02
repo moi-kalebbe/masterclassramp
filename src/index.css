@@ -86,7 +86,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Disable heavy animations on mobile for performance */
+/* Reduce animation intensity on mobile without freezing the carousel */
 @media (max-width: 767px) {
   .animate-pulse-glow {
     animation: none !important;
@@ -94,8 +94,7 @@ html, body {
   }
 
   .animate-logos-drift {
-    animation: none !important;
-    transform: none !important;
+    animation-duration: 18s !important;
   }
 }
 

@@ -34,30 +34,37 @@ const LogosCarouselSection = () => (
     </div>
 
     <div className="relative">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 z-10 w-12 sm:w-24 bg-gradient-to-r from-background to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 z-10 w-12 sm:w-24 bg-gradient-to-l from-background to-transparent pointer-events-none" />
 
       <div
-        className="flex w-max animate-logos-drift items-center motion-reduce:animate-none"
+        className="flex w-max items-center animate-logos-drift hover:[animation-play-state:paused] motion-reduce:animate-none"
         style={{ willChange: "transform", transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
       >
-        {logos.map((logo) => (
+        {[0, 1].map((copyIndex) => (
           <div
-            key={logo.alt}
-            className="flex-shrink-0 px-10 sm:px-14 flex items-center justify-center"
-            style={{ width: 280 }}
+            key={copyIndex}
+            className="flex shrink-0 items-center gap-3 pr-3 sm:gap-6 sm:pr-6"
+            aria-hidden={copyIndex === 1}
           >
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              className="block h-44 sm:h-52 w-auto object-contain opacity-70"
-              loading="eager"
-              decoding="async"
-              width={200}
-              height={208}
-              style={{ backfaceVisibility: "hidden" }}
-            />
+            {logos.map((logo) => (
+              <div
+                key={`${copyIndex}-${logo.alt}`}
+                className="flex min-w-[148px] sm:min-w-[208px] md:min-w-[220px] flex-shrink-0 items-center justify-center px-4 sm:px-6"
+              >
+                <img
+                  src={logo.src}
+                  alt={copyIndex === 0 ? logo.alt : ""}
+                  className="block h-20 sm:h-24 md:h-28 w-auto object-contain opacity-70"
+                  loading="lazy"
+                  decoding="async"
+                  width={200}
+                  height={208}
+                  sizes="(max-width: 640px) 132px, (max-width: 1024px) 176px, 208px"
+                  style={{ backfaceVisibility: "hidden" }}
+                />
+              </div>
+            ))}
           </div>
         ))}
       </div>
