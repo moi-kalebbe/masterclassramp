@@ -1,7 +1,6 @@
 services:
   masterclassramp:
     image: ${MASTERCLASSRAMP_IMAGE:-ghcr.io/moi-kalebbe/masterclassramp:latest}
-    pull_policy: always
     container_name: masterclassramp
     restart: unless-stopped
     ports:
