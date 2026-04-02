@@ -38,7 +38,7 @@ const LogosCarouselSection = () => (
       <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <div className="flex w-max animate-logos-scroll items-center" style={{ willChange: "transform" }}>
+      <div className="flex w-max animate-logos-scroll items-center" style={{ willChange: "transform", contain: "layout style" }}>
         {[...logos, ...logos].map((logo, i) => (
           <div
             key={i}
@@ -51,6 +51,8 @@ const LogosCarouselSection = () => (
               className="h-44 sm:h-52 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
               loading="lazy"
               decoding="async"
+              width={200}
+              height={208}
             />
           </div>
         ))}

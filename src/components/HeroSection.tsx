@@ -8,11 +8,11 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
-  <section className="relative flex flex-col overflow-hidden">
+  <section className="relative flex flex-col overflow-hidden" style={{ contain: "layout style paint" }}>
     {/* Network background */}
     <div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${bgImg})` }}
+      style={{ backgroundImage: `url(${bgImg})`, willChange: "auto" }}
     />
     <div className="absolute inset-0 bg-background/40" />
 
