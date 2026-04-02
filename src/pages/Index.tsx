@@ -26,7 +26,7 @@ const Index = () => {
       </Suspense>
 
       <footer className="py-10 px-6 border-t border-border/30 flex flex-col items-center gap-6">
-        <img src={logoFooter} alt="Rumo à Máxima Potência" className="h-10 w-auto" width={160} height={40} />
+        <img src={logoFooter} alt="Rumo à Máxima Potência" className="h-10 w-40" width={160} height={40} />
         <div className="flex items-center gap-4 text-xs text-muted-foreground/60">
           <Link to="/termos-de-uso" className="hover:text-primary transition underline underline-offset-2">Termos de Uso</Link>
           <span>•</span>

@@ -18,7 +18,7 @@ const pillars = [
 ];
 
 const SolucaoSection = () => (
-  <section className="relative py-20 sm:py-28 px-6" style={{ contain: "layout style paint", contentVisibility: "auto", containIntrinsicSize: "860px" }}>
+  <section className="relative py-20 sm:py-28 px-6">
     {/* Background texture */}
     <div className="absolute inset-0 bg-card/30" />
 

@@ -21,7 +21,7 @@ interface ProblemaSectionProps {
 }
 
 const ProblemaSection = ({ onCtaClick }: ProblemaSectionProps) => (
-  <section className="relative py-20 sm:py-28 px-6 overflow-hidden" style={{ contain: "layout style paint", contentVisibility: "auto", containIntrinsicSize: "900px" }}>
+  <section className="relative py-20 sm:py-28 px-6 overflow-hidden">
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
 
     <div className="relative container max-w-3xl">

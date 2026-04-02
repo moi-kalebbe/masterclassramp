@@ -8,14 +8,14 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
-  <section className="relative flex flex-col overflow-hidden" style={{ contain: "layout style paint" }}>
+  <section className="relative flex flex-col overflow-hidden">
     {/* Network background — real <img> for LCP/preload */}
     <img
       src={bgImg}
       alt=""
       aria-hidden="true"
       className="absolute inset-0 w-full h-full object-cover object-center"
-      fetchPriority="low"
+      fetchPriority="high"
       decoding="async"
       width={1200}
       height={800}
@@ -44,7 +44,12 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => (
 
       {/* Bottom: CTA + Date on the left, Mentors spanning bottom */}
       <div className="relative pt-1">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+        <div
+          className="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none"
+          aria-hidden="true"
+        >
+          <div className="h-[220px] w-[420px] rounded-full bg-primary/10 blur-[100px] sm:h-[280px] sm:w-[520px]" />
+        </div>
 
         <div className="container max-w-6xl px-4 sm:px-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-center sm:items-end gap-6">

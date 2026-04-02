@@ -3,8 +3,8 @@ services:
     image: ${MASTERCLASSRAMP_IMAGE:-ghcr.io/moi-kalebbe/masterclassramp:latest}
     container_name: masterclassramp
     restart: unless-stopped
-    ports:
-      - "3000:80"
+    networks:
+      - traefik-public
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost/healthz"]
       interval: 30s
@@ -13,3 +13,20 @@ services:
       start_period: 10s
     labels:
       - "com.docker.compose.project=masterclassramp"
+      - "traefik.enable=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK:-RmpNet}"
+      - "traefik.http.routers.masterclassramp.rule=Host(`${MASTERCLASSRAMP_HOST:-masterclass.rumoamaximapotencia.com.br}`)"
+      - "traefik.http.routers.masterclassramp.entrypoints=websecure"
+      - "traefik.http.routers.masterclassramp.tls=true"
+      - "traefik.http.routers.masterclassramp.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencryptresolver}"
+      - "traefik.http.routers.masterclassramp-web.rule=Host(`${MASTERCLASSRAMP_HOST:-masterclass.rumoamaximapotencia.com.br}`)"
+      - "traefik.http.routers.masterclassramp-web.entrypoints=web"
+      - "traefik.http.routers.masterclassramp-web.middlewares=masterclassramp-https-redirect"
+      - "traefik.http.middlewares.masterclassramp-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.masterclassramp-https-redirect.redirectscheme.permanent=true"
+      - "traefik.http.services.masterclassramp.loadbalancer.server.port=80"
+
+networks:
+  traefik-public:
+    external: true
+    name: ${TRAEFIK_NETWORK:-RmpNet}

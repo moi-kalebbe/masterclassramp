@@ -56,8 +56,20 @@ O fluxo oficial de deploy usa GitHub Container Registry.
    - `VITE_SUPABASE_PROJECT_ID`
 2. Faça push na `main`.
 3. O workflow `.github/workflows/docker-publish.yml` publica a imagem em `ghcr.io/moi-kalebbe/masterclassramp`.
-4. No Portainer, use o `docker-compose.yml` deste repositorio e defina, se quiser, `MASTERCLASSRAMP_IMAGE=ghcr.io/moi-kalebbe/masterclassramp:<tag>`.
-5. Valide primeiro em `http://IP:3000`.
+4. No Portainer, use o `docker-compose.yml` deste repositorio.
+5. Defina, se quiser, `MASTERCLASSRAMP_IMAGE=ghcr.io/moi-kalebbe/masterclassramp:<tag>`.
+6. O stack final espera um Traefik com a rede externa `RmpNet`. Se o nome da rede for outro, ajuste `TRAEFIK_NETWORK`.
+7. O host padrao do compose e `masterclass.rumoamaximapotencia.com.br`. Se precisar trocar, ajuste `MASTERCLASSRAMP_HOST`.
+8. Valide em `https://masterclass.rumoamaximapotencia.com.br/`.
+
+Exemplo de variaveis opcionais no Portainer:
+
+```env
+MASTERCLASSRAMP_IMAGE=ghcr.io/moi-kalebbe/masterclassramp:latest
+MASTERCLASSRAMP_HOST=masterclass.rumoamaximapotencia.com.br
+TRAEFIK_NETWORK=RmpNet
+TRAEFIK_CERTRESOLVER=letsencryptresolver
+```
 
 ## Observacoes de performance
 

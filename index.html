@@ -14,8 +14,10 @@
     />
     <meta name="author" content="Masterclass RMP" />
     <meta name="theme-color" content="#0a1520" />
+    <link rel="canonical" href="https://masterclass.rumoamaximapotencia.com.br/" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://masterclass.rumoamaximapotencia.com.br/" />
     <meta property="og:title" content="Masterclass: Da Opera&ccedil;&atilde;o Ca&oacute;tica ao Comando Estrat&eacute;gico" />
     <meta
       property="og:description"
@@ -51,16 +53,27 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script defer>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0];
-        var j = d.createElement(s);
-        var dl = l !== "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-M782P9XV");
+      window.addEventListener("load", function () {
+        var bootGtm = function () {
+          (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+            var f = d.getElementsByTagName(s)[0];
+            var j = d.createElement(s);
+            var dl = l !== "dataLayer" ? "&l=" + l : "";
+            j.async = true;
+            j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+            f.parentNode.insertBefore(j, f);
+          })(window, document, "script", "dataLayer", "GTM-M782P9XV");
+        };
+
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(bootGtm, { timeout: 3500 });
+          return;
+        }
+
+        window.setTimeout(bootGtm, 1500);
+      });
     </script>
   </body>
 </html>
