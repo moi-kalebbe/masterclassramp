@@ -16,41 +16,33 @@ const problems = [
   },
 ];
 
-interface ProblemaSectionProps {
-  onCtaClick?: () => void;
-}
-
-const ProblemaSection = ({ onCtaClick }: ProblemaSectionProps) => (
-  <section className="relative py-20 sm:py-28 px-6 overflow-hidden">
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+const ProblemaSection = () => (
+  <section className="relative overflow-hidden px-6 py-20 sm:py-28">
+    <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.03] blur-3xl" />
 
     <div className="relative container max-w-3xl">
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground text-center mb-4 uppercase tracking-tight">
-        Por que sua empresa{" "}
-        <span className="text-primary">parou de crescer?</span>
+      <h2 className="mb-4 text-center text-2xl font-black uppercase tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+        Por que sua empresa <span className="text-primary">parou de crescer?</span>
       </h2>
-      <p className="text-muted-foreground text-center text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
-        Para cada 10% de crescimento no faturamento, a complexidade operacional
-        cresce 50%. Sem a estrutura certa, o crescimento vira caos e o lucro
-        desaparece.
+      <p className="mx-auto mb-14 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
+        Para cada 10% de crescimento no faturamento, a complexidade operacional cresce 50%. Sem a estrutura certa, o
+        crescimento vira caos e o lucro desaparece.
       </p>
       <div className="space-y-4">
-        {problems.map((p) => (
+        {problems.map((problem) => (
           <div
-            key={p.text}
-            className="flex items-start gap-4 p-5 sm:p-6 rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.06)] transition-all duration-300"
+            key={problem.text}
+            className="flex items-start gap-4 rounded-xl border border-border/60 bg-card/50 p-5 backdrop-blur-sm transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.06)] sm:p-6"
           >
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-              <p.icon className="w-5 h-5 text-primary" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <problem.icon className="h-5 w-5 text-primary" />
             </div>
-            <p className="text-foreground text-sm sm:text-base leading-relaxed pt-1.5">
-              {p.text}
-            </p>
+            <p className="pt-1.5 text-sm leading-relaxed text-foreground sm:text-base">{problem.text}</p>
           </div>
         ))}
       </div>
-      <div className="flex justify-center mt-12">
-        <CtaButton onClick={onCtaClick} />
+      <div className="mt-12 flex justify-center">
+        <CtaButton />
       </div>
     </div>
   </section>
